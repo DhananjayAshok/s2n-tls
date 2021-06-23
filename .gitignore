@@ -33,3 +33,6 @@ CMakeCache.txt
 CMakeFiles/*
 .project
 ./codebuild/spec/buildspec_*_batch.yml
+build/*
+temp/*
+.DS_Store
