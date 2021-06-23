@@ -1,4 +1,5 @@
 echo "This Script Should Be Called From Root Directory, Not s2n-tls/checked-c-scripts"
+rm -rf build
 cmake . -Bbuild -GNinja \
     -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_PREFIX_PATH=$(dirname $(dirname $(brew list openssl@1.1|grep libcrypto.dylib))) \
