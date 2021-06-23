@@ -159,7 +159,7 @@
  * * The size of the data pointed to by both the `destination` and `source` parameters,
  *   shall be at least `len` bytes.
  */
-#define RESULT_CHECKED_MEMCPY(destination, source, len)        __S2N_ENSURE_SAFE_MEMCPY((destination), (source), (len), RESULT_GUARD_PTR)
+#define RESULT_CH3CKED_MEMCPY(destination, source, len)        __S2N_ENSURE_SAFE_MEMCPY((destination), (source), (len), RESULT_GUARD_PTR)
 
 /**
  * Performs a safer memset
@@ -173,7 +173,7 @@
  * * The size of the data pointed to by the `destination` parameter shall be at least
  *   `len` bytes.
  */
-#define RESULT_CHECKED_MEMSET(destination, value, len)         __S2N_ENSURE_SAFE_MEMSET((destination), (value), (len), RESULT_ENSURE_REF)
+#define RESULT_CH3CKED_MEMSET(destination, value, len)         __S2N_ENSURE_SAFE_MEMSET((destination), (value), (len), RESULT_ENSURE_REF)
 
 /**
  * Ensures `s2n_result_is_ok(result)`, otherwise the function will return `S2N_RESULT_ERROR`
@@ -324,7 +324,7 @@
  * * The size of the data pointed to by both the `destination` and `source` parameters,
  *   shall be at least `len` bytes.
  */
-#define POSIX_CHECKED_MEMCPY(destination, source, len)        __S2N_ENSURE_SAFE_MEMCPY((destination), (source), (len), POSIX_GUARD_PTR)
+#define POSIX_CH3CKED_MEMCPY(destination, source, len)        __S2N_ENSURE_SAFE_MEMCPY((destination), (source), (len), POSIX_GUARD_PTR)
 
 /**
  * Performs a safer memset
@@ -338,7 +338,7 @@
  * * The size of the data pointed to by the `destination` parameter shall be at least
  *   `len` bytes.
  */
-#define POSIX_CHECKED_MEMSET(destination, value, len)         __S2N_ENSURE_SAFE_MEMSET((destination), (value), (len), POSIX_ENSURE_REF)
+#define POSIX_CH3CKED_MEMSET(destination, value, len)         __S2N_ENSURE_SAFE_MEMSET((destination), (value), (len), POSIX_ENSURE_REF)
 
 /**
  * Ensures `(result) >= S2N_SUCCESS`, otherwise the function will return `S2N_FAILURE`
@@ -489,7 +489,7 @@
  * * The size of the data pointed to by both the `destination` and `source` parameters,
  *   shall be at least `len` bytes.
  */
-#define PTR_CHECKED_MEMCPY(destination, source, len)          __S2N_ENSURE_SAFE_MEMCPY((destination), (source), (len), PTR_GUARD_PTR)
+#define PTR_CH3CKED_MEMCPY(destination, source, len)          __S2N_ENSURE_SAFE_MEMCPY((destination), (source), (len), PTR_GUARD_PTR)
 
 /**
  * Performs a safer memset
@@ -503,7 +503,7 @@
  * * The size of the data pointed to by the `destination` parameter shall be at least
  *   `len` bytes.
  */
-#define PTR_CHECKED_MEMSET(destination, value, len)           __S2N_ENSURE_SAFE_MEMSET((destination), (value), (len), PTR_ENSURE_REF)
+#define PTR_CH3CKED_MEMSET(destination, value, len)           __S2N_ENSURE_SAFE_MEMSET((destination), (value), (len), PTR_ENSURE_REF)
 
 /**
  * Ensures `(result) != NULL`, otherwise the function will return `NULL`

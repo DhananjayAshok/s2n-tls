@@ -72,7 +72,7 @@ static int s2n_sslv3_prf(struct s2n_prf_working_space *ws, struct s2n_blob *secr
 
         uint32_t bytes_to_copy = MIN(outputlen, sizeof(ws->ssl3.md5_digest));
 
-        POSIX_CHECKED_MEMCPY(output, ws->ssl3.md5_digest, bytes_to_copy);
+        POSIX_CH3CKED_MEMCPY(output, ws->ssl3.md5_digest, bytes_to_copy);
 
         outputlen -= bytes_to_copy;
         output += bytes_to_copy;

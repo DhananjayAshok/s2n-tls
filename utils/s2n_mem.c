@@ -200,7 +200,7 @@ int s2n_realloc(struct s2n_blob *b, uint32_t size)
     POSIX_ENSURE(new_memory.data != NULL, S2N_ERR_ALLOC);
 
     if (b->size) {
-        POSIX_CHECKED_MEMCPY(new_memory.data, b->data, b->size);
+        POSIX_CH3CKED_MEMCPY(new_memory.data, b->data, b->size);
     }
 
     if (b->allocated) {
@@ -239,7 +239,7 @@ int s2n_dup(struct s2n_blob *from, struct s2n_blob *to)
 
     POSIX_GUARD(s2n_alloc(to, from->size));
 
-    POSIX_CHECKED_MEMCPY(to->data, from->data, to->size);
+    POSIX_CH3CKED_MEMCPY(to->data, from->data, to->size);
 
     return S2N_SUCCESS;
 }

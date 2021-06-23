@@ -797,10 +797,10 @@ int s2n_config_add_ticket_crypto_key(struct s2n_config *config,
     /* Insert hash key into a sorted array at known index */
     POSIX_GUARD_RESULT(s2n_set_add(config->ticket_key_hashes, hash_output));
 
-    POSIX_CHECKED_MEMCPY(session_ticket_key->key_name, name, S2N_TICKET_KEY_NAME_LEN);
-    POSIX_CHECKED_MEMCPY(session_ticket_key->aes_key, out_key.data, S2N_AES256_KEY_LEN);
+    POSIX_CH3CKED_MEMCPY(session_ticket_key->key_name, name, S2N_TICKET_KEY_NAME_LEN);
+    POSIX_CH3CKED_MEMCPY(session_ticket_key->aes_key, out_key.data, S2N_AES256_KEY_LEN);
     out_key.data = output_pad + S2N_AES256_KEY_LEN;
-    POSIX_CHECKED_MEMCPY(session_ticket_key->implicit_aad, out_key.data, S2N_TICKET_AAD_IMPLICIT_LEN);
+    POSIX_CH3CKED_MEMCPY(session_ticket_key->implicit_aad, out_key.data, S2N_TICKET_AAD_IMPLICIT_LEN);
 
     if (intro_time_in_seconds_from_epoch == 0) {
         uint64_t now;

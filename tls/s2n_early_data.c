@@ -194,7 +194,7 @@ int s2n_connection_set_server_early_data_context(struct s2n_connection *conn, co
     }
 
     POSIX_GUARD(s2n_realloc(&conn->server_early_data_context, context_size));
-    POSIX_CHECKED_MEMCPY(conn->server_early_data_context.data, context, context_size);
+    POSIX_CH3CKED_MEMCPY(conn->server_early_data_context.data, context, context_size);
     return S2N_SUCCESS;
 }
 
@@ -233,7 +233,7 @@ int s2n_psk_set_application_protocol(struct s2n_psk *psk, const uint8_t *applica
     }
     struct s2n_blob *protocol_blob = &psk->early_data_config.application_protocol;
     POSIX_GUARD(s2n_realloc(protocol_blob, size));
-    POSIX_CHECKED_MEMCPY(protocol_blob->data, application_protocol, size);
+    POSIX_CH3CKED_MEMCPY(protocol_blob->data, application_protocol, size);
     return S2N_SUCCESS;
 }
 
@@ -245,7 +245,7 @@ int s2n_psk_set_early_data_context(struct s2n_psk *psk, const uint8_t *context, 
     }
     struct s2n_blob *context_blob = &psk->early_data_config.context;
     POSIX_GUARD(s2n_realloc(context_blob, size));
-    POSIX_CHECKED_MEMCPY(context_blob->data, context, size);
+    POSIX_CH3CKED_MEMCPY(context_blob->data, context, size);
     return S2N_SUCCESS;
 }
 
@@ -411,7 +411,7 @@ int s2n_offered_early_data_get_context(struct s2n_offered_early_data *early_data
     struct s2n_early_data_config *early_data_config = &conn->psk_params.chosen_psk->early_data_config;
 
     POSIX_ENSURE(early_data_config->context.size <= max_len, S2N_ERR_INSUFFICIENT_MEM_SIZE);
-    POSIX_CHECKED_MEMCPY(context, early_data_config->context.data, early_data_config->context.size);
+    POSIX_CH3CKED_MEMCPY(context, early_data_config->context.data, early_data_config->context.size);
 
     return S2N_SUCCESS;
 }

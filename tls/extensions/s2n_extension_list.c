@@ -162,7 +162,7 @@ int s2n_extension_list_parse(struct s2n_stuffer *in, s2n_parsed_extensions_list 
     POSIX_ENSURE_REF(in);
     POSIX_ENSURE_REF(parsed_extension_list);
 
-    POSIX_CHECKED_MEMSET((s2n_parsed_extension*) parsed_extension_list->parsed_extensions,
+    POSIX_CH3CKED_MEMSET((s2n_parsed_extension*) parsed_extension_list->parsed_extensions,
             0, sizeof(parsed_extension_list->parsed_extensions));
 
     uint16_t total_extensions_size;

@@ -252,7 +252,7 @@ static int s2n_connection_free_keys(struct s2n_connection *conn)
 static int s2n_connection_zero(struct s2n_connection *conn, int mode, struct s2n_config *config)
 {
     /* Zero the whole connection structure */
-    POSIX_CHECKED_MEMSET(conn, 0, sizeof(struct s2n_connection));
+    POSIX_CH3CKED_MEMSET(conn, 0, sizeof(struct s2n_connection));
 
     conn->mode = mode;
     conn->initial.cipher_suite = &s2n_null_cipher_suite;
@@ -684,19 +684,19 @@ int s2n_connection_wipe(struct s2n_connection *conn)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Waddress"
 #endif
-    POSIX_CHECKED_MEMCPY(&alert_in, &conn->alert_in, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&reader_alert_out, &conn->reader_alert_out, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&writer_alert_out, &conn->writer_alert_out, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&client_ticket_to_decrypt, &conn->client_ticket_to_decrypt, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&handshake_io, &conn->handshake.io, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&client_hello_raw_message, &conn->client_hello.raw_message, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&header_in, &conn->header_in, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&in, &conn->in, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&out, &conn->out, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&initial_client_key, &conn->initial.client_key, sizeof(struct s2n_session_key));
-    POSIX_CHECKED_MEMCPY(&initial_server_key, &conn->initial.server_key, sizeof(struct s2n_session_key));
-    POSIX_CHECKED_MEMCPY(&secure_client_key, &conn->secure.client_key, sizeof(struct s2n_session_key));
-    POSIX_CHECKED_MEMCPY(&secure_server_key, &conn->secure.server_key, sizeof(struct s2n_session_key));
+    POSIX_CH3CKED_MEMCPY(&alert_in, &conn->alert_in, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&reader_alert_out, &conn->reader_alert_out, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&writer_alert_out, &conn->writer_alert_out, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&client_ticket_to_decrypt, &conn->client_ticket_to_decrypt, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&handshake_io, &conn->handshake.io, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&client_hello_raw_message, &conn->client_hello.raw_message, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&header_in, &conn->header_in, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&in, &conn->in, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&out, &conn->out, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&initial_client_key, &conn->initial.client_key, sizeof(struct s2n_session_key));
+    POSIX_CH3CKED_MEMCPY(&initial_server_key, &conn->initial.server_key, sizeof(struct s2n_session_key));
+    POSIX_CH3CKED_MEMCPY(&secure_client_key, &conn->secure.client_key, sizeof(struct s2n_session_key));
+    POSIX_CH3CKED_MEMCPY(&secure_server_key, &conn->secure.server_key, sizeof(struct s2n_session_key));
     POSIX_GUARD(s2n_connection_save_prf_state(&prf_handles, conn));
     POSIX_GUARD(s2n_connection_save_hash_state(&hash_handles, conn));
     POSIX_GUARD(s2n_connection_save_hmac_state(&hmac_handles, conn));
@@ -706,19 +706,19 @@ int s2n_connection_wipe(struct s2n_connection *conn)
 
     POSIX_GUARD(s2n_connection_zero(conn, mode, config));
 
-    POSIX_CHECKED_MEMCPY(&conn->alert_in, &alert_in, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&conn->reader_alert_out, &reader_alert_out, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&conn->writer_alert_out, &writer_alert_out, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&conn->client_ticket_to_decrypt, &client_ticket_to_decrypt, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&conn->handshake.io, &handshake_io, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&conn->client_hello.raw_message, &client_hello_raw_message, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&conn->header_in, &header_in, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&conn->in, &in, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&conn->out, &out, sizeof(struct s2n_stuffer));
-    POSIX_CHECKED_MEMCPY(&conn->initial.client_key, &initial_client_key, sizeof(struct s2n_session_key));
-    POSIX_CHECKED_MEMCPY(&conn->initial.server_key, &initial_server_key, sizeof(struct s2n_session_key));
-    POSIX_CHECKED_MEMCPY(&conn->secure.client_key, &secure_client_key, sizeof(struct s2n_session_key));
-    POSIX_CHECKED_MEMCPY(&conn->secure.server_key, &secure_server_key, sizeof(struct s2n_session_key));
+    POSIX_CH3CKED_MEMCPY(&conn->alert_in, &alert_in, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&conn->reader_alert_out, &reader_alert_out, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&conn->writer_alert_out, &writer_alert_out, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&conn->client_ticket_to_decrypt, &client_ticket_to_decrypt, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&conn->handshake.io, &handshake_io, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&conn->client_hello.raw_message, &client_hello_raw_message, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&conn->header_in, &header_in, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&conn->in, &in, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&conn->out, &out, sizeof(struct s2n_stuffer));
+    POSIX_CH3CKED_MEMCPY(&conn->initial.client_key, &initial_client_key, sizeof(struct s2n_session_key));
+    POSIX_CH3CKED_MEMCPY(&conn->initial.server_key, &initial_server_key, sizeof(struct s2n_session_key));
+    POSIX_CH3CKED_MEMCPY(&conn->secure.client_key, &secure_client_key, sizeof(struct s2n_session_key));
+    POSIX_CH3CKED_MEMCPY(&conn->secure.server_key, &secure_server_key, sizeof(struct s2n_session_key));
     POSIX_GUARD(s2n_connection_restore_prf_state(conn, &prf_handles));
     POSIX_GUARD(s2n_connection_restore_hash_state(conn, &hash_handles));
     POSIX_GUARD(s2n_connection_restore_hmac_state(conn, &hmac_handles));
@@ -1126,7 +1126,7 @@ int s2n_set_server_name(struct s2n_connection *conn, const char *server_name)
     int len = strlen(server_name);
     S2N_ERROR_IF(len > S2N_MAX_SERVER_NAME, S2N_ERR_SERVER_NAME_TOO_LONG);
 
-    POSIX_CHECKED_MEMCPY(conn->server_name, server_name, len);
+    POSIX_CH3CKED_MEMCPY(conn->server_name, server_name, len);
 
     return 0;
 }
@@ -1178,7 +1178,7 @@ int s2n_connection_get_session_id(struct s2n_connection *conn, uint8_t *session_
 
     S2N_ERROR_IF(session_id_len > max_length, S2N_ERR_SESSION_ID_TOO_LONG);
 
-    POSIX_CHECKED_MEMCPY(session_id, conn->session_id, session_id_len);
+    POSIX_CH3CKED_MEMCPY(session_id, conn->session_id, session_id_len);
 
     return session_id_len;
 }
@@ -1510,7 +1510,7 @@ int s2n_connection_get_peer_cert_chain(const struct s2n_connection *conn, struct
         insert = &new_node->next;
 
         POSIX_GUARD(s2n_alloc(&new_node->raw, cert_size));
-        POSIX_CHECKED_MEMCPY(new_node->raw.data, cert_data, cert_size);
+        POSIX_CH3CKED_MEMCPY(new_node->raw.data, cert_data, cert_size);
     }
 
     ZERO_TO_DISABLE_DEFER_CLEANUP(cert_chain);

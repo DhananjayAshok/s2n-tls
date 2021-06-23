@@ -78,7 +78,7 @@ static int s2n_drbg_bits(struct s2n_drbg *drbg, struct s2n_blob *out)
     POSIX_GUARD(s2n_drbg_block_encrypt(drbg->ctx, drbg->v, spare_block));
     drbg->bytes_used += S2N_DRBG_BLOCK_SIZE;
 
-    POSIX_CHECKED_MEMCPY(out->data + block_aligned_size, spare_block, out->size - block_aligned_size);
+    POSIX_CH3CKED_MEMCPY(out->data + block_aligned_size, spare_block, out->size - block_aligned_size);
 
     return 0;
 }
@@ -102,7 +102,7 @@ static int s2n_drbg_update(struct s2n_drbg *drbg, struct s2n_blob *provided_data
     /* Update the key and value */
     POSIX_GUARD_OSSL(EVP_EncryptInit_ex(drbg->ctx, NULL, NULL, temp_blob.data, NULL), S2N_ERR_DRBG);
 
-    POSIX_CHECKED_MEMCPY(drbg->v, temp_blob.data + s2n_drbg_key_size(drbg), S2N_DRBG_BLOCK_SIZE);
+    POSIX_CH3CKED_MEMCPY(drbg->v, temp_blob.data + s2n_drbg_key_size(drbg), S2N_DRBG_BLOCK_SIZE);
 
     return 0;
 }
@@ -181,7 +181,7 @@ int s2n_drbg_instantiate(struct s2n_drbg *drbg, struct s2n_blob *personalization
     s2n_stack_blob(ps, s2n_drbg_seed_size(drbg), S2N_DRBG_MAX_SEED_SIZE);
     POSIX_GUARD(s2n_blob_zero(&ps));
 
-    POSIX_CHECKED_MEMCPY(ps.data, personalization_string->data, MIN(ps.size, personalization_string->size));
+    POSIX_CH3CKED_MEMCPY(ps.data, personalization_string->data, MIN(ps.size, personalization_string->size));
 
     /* Seed the DRBG */
     POSIX_GUARD(s2n_drbg_seed(drbg, &ps));

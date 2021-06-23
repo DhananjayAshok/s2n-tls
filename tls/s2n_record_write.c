@@ -190,7 +190,7 @@ static inline int s2n_record_encrypt(
         /* Copy the last encrypted block to be the next IV */
         if (conn->actual_protocol_version < S2N_TLS11) {
             POSIX_ENSURE_GTE(en->size, block_size);
-            POSIX_CHECKED_MEMCPY(implicit_iv, en->data + en->size - block_size, block_size);
+            POSIX_CH3CKED_MEMCPY(implicit_iv, en->data + en->size - block_size, block_size);
         }
         break;
     case S2N_AEAD:
@@ -202,7 +202,7 @@ static inline int s2n_record_encrypt(
 
         /* Copy the last encrypted block to be the next IV */
         POSIX_ENSURE_GTE(en->size, block_size);
-        POSIX_CHECKED_MEMCPY(implicit_iv, en->data + en->size - block_size, block_size);
+        POSIX_CH3CKED_MEMCPY(implicit_iv, en->data + en->size - block_size, block_size);
         break;
     default:
         POSIX_BAIL(S2N_ERR_CIPHER_TYPE);

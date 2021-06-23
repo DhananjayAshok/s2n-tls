@@ -186,7 +186,7 @@ int s2n_test_tls13_pq_handshake(const struct s2n_security_policy *client_sec_pol
 
     /* Verify secrets aren't just zero'ed memory */
     uint8_t all_zeros[S2N_TLS13_SECRET_MAX_LEN] = { 0 };
-    POSIX_CHECKED_MEMSET((void *)all_zeros, 0, S2N_TLS13_SECRET_MAX_LEN);
+    POSIX_CH3CKED_MEMSET((void *)all_zeros, 0, S2N_TLS13_SECRET_MAX_LEN);
     POSIX_ENSURE_NE(0, memcmp(all_zeros, client_secrets.derive_secret.data, client_secrets.derive_secret.size));
     POSIX_ENSURE_NE(0, memcmp(all_zeros, client_secrets.extract_secret.data, client_secrets.extract_secret.size));
     POSIX_ENSURE_NE(0, memcmp(all_zeros, server_secrets.derive_secret.data, server_secrets.derive_secret.size));

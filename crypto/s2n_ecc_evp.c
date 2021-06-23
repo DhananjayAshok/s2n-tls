@@ -371,7 +371,7 @@ int s2n_ecc_evp_write_params_point(struct s2n_ecc_evp_params *ecc_evp_params, st
     else {
         point_blob.data = s2n_stuffer_raw_write(out, ecc_evp_params->negotiated_curve->share_size);
         POSIX_ENSURE_REF(point_blob.data);
-        POSIX_CHECKED_MEMCPY(point_blob.data, encoded_point, size);
+        POSIX_CH3CKED_MEMCPY(point_blob.data, encoded_point, size);
         OPENSSL_free(encoded_point);
     }
 #else

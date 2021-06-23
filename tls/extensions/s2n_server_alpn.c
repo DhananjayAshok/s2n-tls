@@ -74,7 +74,7 @@ static int s2n_alpn_recv(struct s2n_connection *conn, struct s2n_stuffer *extens
     POSIX_ENSURE_REF(protocol);
 
     /* copy the first protocol name */
-    POSIX_CHECKED_MEMCPY(conn->application_protocol, protocol, protocol_len);
+    POSIX_CH3CKED_MEMCPY(conn->application_protocol, protocol, protocol_len);
     conn->application_protocol[protocol_len] = '\0';
 
     return S2N_SUCCESS;

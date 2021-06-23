@@ -130,7 +130,7 @@ int s2n_stuffer_resize(struct s2n_stuffer *stuffer, const uint32_t size)
     }
 
     if (size < stuffer->blob.size) {
-        POSIX_CHECKED_MEMSET(stuffer->blob.data + size, S2N_WIPE_PATTERN, (stuffer->blob.size - size));
+        POSIX_CH3CKED_MEMSET(stuffer->blob.data + size, S2N_WIPE_PATTERN, (stuffer->blob.size - size));
         if (stuffer->read_cursor > size) stuffer->read_cursor = size;
         if (stuffer->write_cursor > size) stuffer->write_cursor = size;
         if (stuffer->high_water_mark > size) stuffer->high_water_mark = size;
@@ -190,7 +190,7 @@ int s2n_stuffer_wipe_n(struct s2n_stuffer *stuffer, const uint32_t size)
 
     /* We know that size is now less than write_cursor */
     stuffer->write_cursor -= size;
-    POSIX_CHECKED_MEMSET(stuffer->blob.data + stuffer->write_cursor, S2N_WIPE_PATTERN, size);
+    POSIX_CH3CKED_MEMSET(stuffer->blob.data + stuffer->write_cursor, S2N_WIPE_PATTERN, size);
     stuffer->read_cursor = MIN(stuffer->read_cursor, stuffer->write_cursor);
 
     POSIX_POSTCONDITION(s2n_stuffer_validate(stuffer));
@@ -205,7 +205,7 @@ int s2n_stuffer_wipe(struct s2n_stuffer *stuffer)
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     if (!s2n_stuffer_is_wiped(stuffer)) {
-        POSIX_CHECKED_MEMSET(stuffer->blob.data, S2N_WIPE_PATTERN, stuffer->high_water_mark);
+        POSIX_CH3CKED_MEMSET(stuffer->blob.data, S2N_WIPE_PATTERN, stuffer->high_water_mark);
     }
 
     stuffer->tainted = 0;
@@ -248,8 +248,8 @@ int s2n_stuffer_erase_and_read(struct s2n_stuffer *stuffer, struct s2n_blob *out
     void *ptr = (stuffer->blob.data) ? (stuffer->blob.data + stuffer->read_cursor - out->size) : NULL;
     POSIX_ENSURE(S2N_MEM_IS_READABLE(ptr, out->size), S2N_ERR_NULL);
 
-    POSIX_CHECKED_MEMCPY(out->data, ptr, out->size);
-    POSIX_CHECKED_MEMSET(ptr, 0, out->size);
+    POSIX_CH3CKED_MEMCPY(out->data, ptr, out->size);
+    POSIX_CH3CKED_MEMSET(ptr, 0, out->size);
 
     return S2N_SUCCESS;
 }
@@ -262,7 +262,7 @@ int s2n_stuffer_read_bytes(struct s2n_stuffer *stuffer, uint8_t * data, uint32_t
     POSIX_ENSURE_REF(stuffer->blob.data);
     void *ptr = stuffer->blob.data + stuffer->read_cursor - size;
 
-    POSIX_CHECKED_MEMCPY(data, ptr, size);
+    POSIX_CH3CKED_MEMCPY(data, ptr, size);
 
     return S2N_SUCCESS;
 }
@@ -273,8 +273,8 @@ int s2n_stuffer_erase_and_read_bytes(struct s2n_stuffer *stuffer, uint8_t * data
     POSIX_ENSURE_REF(stuffer->blob.data);
     void *ptr = stuffer->blob.data + stuffer->read_cursor - size;
 
-    POSIX_CHECKED_MEMCPY(data, ptr, size);
-    POSIX_CHECKED_MEMSET(ptr, 0, size);
+    POSIX_CH3CKED_MEMCPY(data, ptr, size);
+    POSIX_CH3CKED_MEMSET(ptr, 0, size);
 
     return S2N_SUCCESS;
 }
@@ -319,7 +319,7 @@ int s2n_stuffer_write_bytes(struct s2n_stuffer *stuffer, const uint8_t * data, c
         return S2N_SUCCESS;
     }
 
-    POSIX_CHECKED_MEMCPY(ptr, data, size);
+    POSIX_CH3CKED_MEMCPY(ptr, data, size);
 
     POSIX_POSTCONDITION(s2n_stuffer_validate(stuffer));
     return S2N_SUCCESS;
@@ -344,7 +344,7 @@ int s2n_stuffer_writev_bytes(struct s2n_stuffer *stuffer, const struct iovec* io
         uint32_t iov_size_to_take = MIN(size_left, iov_len);
         POSIX_ENSURE_REF(iov[i].iov_base);
         POSIX_ENSURE(to_skip < iov[i].iov_len, S2N_FAILURE);
-        POSIX_CHECKED_MEMCPY(ptr, ((uint8_t*)(iov[i].iov_base)) + to_skip, iov_size_to_take);
+        POSIX_CH3CKED_MEMCPY(ptr, ((uint8_t*)(iov[i].iov_base)) + to_skip, iov_size_to_take);
         size_left -= iov_size_to_take;
         if (size_left == 0) {
             break;
@@ -364,7 +364,7 @@ static int s2n_stuffer_copy_impl(struct s2n_stuffer *from, struct s2n_stuffer *t
     uint8_t *from_ptr = (from->blob.data) ? (from->blob.data + from->read_cursor - len) : NULL;
     uint8_t *to_ptr = (to->blob.data) ? (to->blob.data + to->write_cursor - len) : NULL;
 
-    POSIX_CHECKED_MEMCPY(to_ptr, from_ptr, len);
+    POSIX_CH3CKED_MEMCPY(to_ptr, from_ptr, len);
 
     return S2N_SUCCESS;
 }
@@ -408,7 +408,7 @@ int s2n_stuffer_extract_blob(struct s2n_stuffer *stuffer, struct s2n_blob *out)
     POSIX_GUARD(s2n_realloc(out , s2n_stuffer_data_available(stuffer)));
 
     if (s2n_stuffer_data_available(stuffer) > 0) {
-        POSIX_CHECKED_MEMCPY(out->data,
+        POSIX_CH3CKED_MEMCPY(out->data,
                      stuffer->blob.data + stuffer->read_cursor,
                      s2n_stuffer_data_available(stuffer));
     }

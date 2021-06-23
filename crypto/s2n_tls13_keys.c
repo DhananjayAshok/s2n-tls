@@ -186,7 +186,7 @@ int s2n_tls13_derive_early_secret(struct s2n_tls13_keys *keys, struct s2n_psk *p
     } else {
         /* Sanity check that an early secret exists and its size is equal to the extract secret size */
         POSIX_ENSURE_EQ(psk->early_secret.size, keys->extract_secret.size);
-        POSIX_CHECKED_MEMCPY(keys->extract_secret.data, psk->early_secret.data, psk->early_secret.size);
+        POSIX_CH3CKED_MEMCPY(keys->extract_secret.data, psk->early_secret.data, psk->early_secret.size);
     }
 
     /* derive next secret */

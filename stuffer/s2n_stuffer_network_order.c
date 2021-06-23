@@ -44,7 +44,7 @@ int s2n_stuffer_reserve(struct s2n_stuffer *stuffer, struct s2n_stuffer_reservat
     *reservation = (struct s2n_stuffer_reservation) {.stuffer = stuffer, .write_cursor = stuffer->write_cursor, .length = length};
 
     POSIX_GUARD(s2n_stuffer_skip_write(stuffer, reservation->length));
-    POSIX_CHECKED_MEMSET(stuffer->blob.data + reservation->write_cursor, S2N_WIPE_PATTERN, reservation->length);
+    POSIX_CH3CKED_MEMSET(stuffer->blob.data + reservation->write_cursor, S2N_WIPE_PATTERN, reservation->length);
     POSIX_POSTCONDITION(s2n_stuffer_reservation_validate(reservation));
     return S2N_SUCCESS;
 }

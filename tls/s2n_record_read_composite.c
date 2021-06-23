@@ -79,12 +79,12 @@ int s2n_record_parse_composite(
     POSIX_ENSURE_EQ(en.size % iv.size, 0);
 
     /* Copy the last encrypted block to be the next IV */
-    POSIX_CHECKED_MEMCPY(ivpad, en.data + en.size - iv.size, iv.size);
+    POSIX_CH3CKED_MEMCPY(ivpad, en.data + en.size - iv.size, iv.size);
 
     /* This will: Skip the explicit IV(if applicable), decrypt the payload, verify the MAC and padding. */
     POSIX_GUARD((cipher_suite->record_alg->cipher->io.comp.decrypt(session_key, &iv, &en, &en)));
 
-    POSIX_CHECKED_MEMCPY(implicit_iv, ivpad, iv.size);
+    POSIX_CH3CKED_MEMCPY(implicit_iv, ivpad, iv.size);
 
     /* Subtract the padding length */
     POSIX_ENSURE_GT(en.size, 0);

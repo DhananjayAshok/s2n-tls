@@ -224,7 +224,7 @@ static int s2n_low_level_hash_digest(struct s2n_hash_state *state, void *out, ui
 
 static int s2n_low_level_hash_copy(struct s2n_hash_state *to, struct s2n_hash_state *from)
 {
-    POSIX_CHECKED_MEMCPY(to, from, sizeof(struct s2n_hash_state));
+    POSIX_CH3CKED_MEMCPY(to, from, sizeof(struct s2n_hash_state));
     return 0;
 }
 

@@ -261,7 +261,7 @@ static uint8_t s2n_verify_host_information(struct s2n_x509_validator *validator,
                 if (common_name) {
                     char peer_cn[255];
                     static size_t peer_cn_size = sizeof(peer_cn);
-                    POSIX_CHECKED_MEMSET(&peer_cn, 0, peer_cn_size);
+                    POSIX_CH3CKED_MEMSET(&peer_cn, 0, peer_cn_size);
 
                     /* X520CommonName allows the following ANSI string types per RFC 5280 Appendix A.1 */
                     if (ASN1_STRING_type(common_name) == V_ASN1_TELETEXSTRING ||
@@ -273,7 +273,7 @@ static uint8_t s2n_verify_host_information(struct s2n_x509_validator *validator,
                         size_t len = (size_t) ASN1_STRING_length(common_name);
 
                         POSIX_ENSURE_LTE(len, sizeof(peer_cn) - 1);
-                        POSIX_CHECKED_MEMCPY(peer_cn, ASN1_STRING_data(common_name), len);
+                        POSIX_CH3CKED_MEMCPY(peer_cn, ASN1_STRING_data(common_name), len);
                         verified = conn->verify_host_fn(peer_cn, len, conn->data_for_verify_host);
                     }
                 }

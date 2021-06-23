@@ -76,7 +76,7 @@ static int s2n_hkdf_expand(struct s2n_hmac_state *hmac, s2n_hmac_algorithm alg, 
             cat_len = output->size - done_len;
         }
 
-        POSIX_CHECKED_MEMCPY(output->data + done_len, prev, cat_len);
+        POSIX_CH3CKED_MEMCPY(output->data + done_len, prev, cat_len);
 
         done_len += cat_len;
     

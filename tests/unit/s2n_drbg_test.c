@@ -378,7 +378,7 @@ int main(int argc, char **argv)
      * a common error is to incorrectly fill the last (not-aligned) bytes. Sometimes
      * they are left unchanged and sometimes a single byte is copied in. We ensure
      * that the last 15 bytes are not all equal to guard against this. */
-    POSIX_CHECKED_MEMSET((void*)data, 0, 31);
+    POSIX_CH3CKED_MEMSET((void*)data, 0, 31);
     blob.size = 31;
     EXPECT_SUCCESS(s2n_drbg_generate(&aes128_drbg, &blob));
     bool bytes_are_all_equal = true;
@@ -390,7 +390,7 @@ int main(int argc, char **argv)
     }
     EXPECT_FALSE(bytes_are_all_equal);
 
-    POSIX_CHECKED_MEMSET((void*)data, 0, 31);
+    POSIX_CH3CKED_MEMSET((void*)data, 0, 31);
     blob.size = 31;
     EXPECT_SUCCESS(s2n_drbg_generate(&aes256_pr_drbg, &blob));
     bytes_are_all_equal = true;

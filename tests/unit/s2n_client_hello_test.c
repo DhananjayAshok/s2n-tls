@@ -744,7 +744,7 @@ int main(int argc, char **argv)
         /* Verify the collected client hello matches what was sent except for the zero-ed client random */
         EXPECT_NOT_NULL(expected_client_hello = malloc(sent_client_hello_len));
         EXPECT_MEMCPY_SUCCESS(expected_client_hello, sent_client_hello, sent_client_hello_len);
-        POSIX_CHECKED_MEMSET(expected_client_hello + client_random_offset, 0, S2N_TLS_RANDOM_DATA_LEN);
+        POSIX_CH3CKED_MEMSET(expected_client_hello + client_random_offset, 0, S2N_TLS_RANDOM_DATA_LEN);
         EXPECT_SUCCESS(memcmp(collected_client_hello, expected_client_hello, sent_client_hello_len));
 
         /* Verify s2n_client_hello_get_raw_message_length correct */

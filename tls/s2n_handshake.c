@@ -267,7 +267,7 @@ int s2n_conn_find_name_matching_certs(struct s2n_connection *conn)
     struct s2n_blob hostname_blob = { .data = (uint8_t *) (uintptr_t) name, .size = strlen(name) };
     POSIX_ENSURE_LTE(hostname_blob.size, S2N_MAX_SERVER_NAME);
     char normalized_hostname[S2N_MAX_SERVER_NAME + 1] = { 0 };
-    POSIX_CHECKED_MEMCPY(normalized_hostname, hostname_blob.data, hostname_blob.size);
+    POSIX_CH3CKED_MEMCPY(normalized_hostname, hostname_blob.data, hostname_blob.size);
     struct s2n_blob normalized_name = { .data = (uint8_t *) normalized_hostname, .size = hostname_blob.size };
     POSIX_GUARD(s2n_blob_char_to_lower(&normalized_name));
     struct s2n_stuffer normalized_hostname_stuffer;

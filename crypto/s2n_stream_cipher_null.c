@@ -30,7 +30,7 @@ static int s2n_stream_cipher_null_endecrypt(struct s2n_session_key *key, struct 
     S2N_ERROR_IF(out->size < in->size, S2N_ERR_SIZE_MISMATCH);
 
     if (in->data != out->data) {
-        POSIX_CHECKED_MEMCPY(out->data, in->data, out->size);
+        POSIX_CH3CKED_MEMCPY(out->data, in->data, out->size);
     }
     return 0;
 }

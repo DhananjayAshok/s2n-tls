@@ -32,7 +32,7 @@ S2N_RESULT s2n_psk_init(struct s2n_psk *psk, s2n_psk_type type)
 {
     RESULT_ENSURE_MUT(psk);
 
-    RESULT_CHECKED_MEMSET(psk, 0, sizeof(struct s2n_psk));
+    RESULT_CH3CKED_MEMSET(psk, 0, sizeof(struct s2n_psk));
     psk->hmac_alg = S2N_HMAC_SHA256;
     psk->type = type;
 
@@ -58,7 +58,7 @@ int s2n_psk_set_identity(struct s2n_psk *psk, const uint8_t *identity, uint16_t 
     POSIX_ENSURE(identity_size != 0, S2N_ERR_INVALID_ARGUMENT);
 
     POSIX_GUARD(s2n_realloc(&psk->identity, identity_size));
-    POSIX_CHECKED_MEMCPY(psk->identity.data, identity, identity_size);
+    POSIX_CH3CKED_MEMCPY(psk->identity.data, identity, identity_size);
 
     return S2N_SUCCESS;
 }
@@ -70,7 +70,7 @@ int s2n_psk_set_secret(struct s2n_psk *psk, const uint8_t *secret, uint16_t secr
     POSIX_ENSURE(secret_size != 0, S2N_ERR_INVALID_ARGUMENT);
 
     POSIX_GUARD(s2n_realloc(&psk->secret, secret_size));
-    POSIX_CHECKED_MEMCPY(psk->secret.data, secret, secret_size);
+    POSIX_CH3CKED_MEMCPY(psk->secret.data, secret, secret_size);
 
     return S2N_SUCCESS;
 }
@@ -95,7 +95,7 @@ S2N_RESULT s2n_psk_clone(struct s2n_psk *new_psk, struct s2n_psk *original_psk)
     RESULT_GUARD_POSIX(s2n_psk_set_identity(new_psk, original_psk->identity.data, original_psk->identity.size));
     RESULT_GUARD_POSIX(s2n_psk_set_secret(new_psk, original_psk->secret.data, original_psk->secret.size));
     RESULT_GUARD_POSIX(s2n_realloc(&new_psk->early_secret, original_psk->early_secret.size));
-    RESULT_CHECKED_MEMCPY(new_psk->early_secret.data, original_psk->early_secret.data, original_psk->early_secret.size);
+    RESULT_CH3CKED_MEMCPY(new_psk->early_secret.data, original_psk->early_secret.data, original_psk->early_secret.size);
     RESULT_GUARD(s2n_early_data_config_clone(new_psk, &original_psk->early_data_config));
 
     return S2N_RESULT_OK;
@@ -127,7 +127,7 @@ int s2n_psk_free(struct s2n_psk **psk)
 S2N_RESULT s2n_psk_parameters_init(struct s2n_psk_parameters *params)
 {
     RESULT_ENSURE_REF(params);
-    RESULT_CHECKED_MEMSET(params, 0, sizeof(struct s2n_psk_parameters));
+    RESULT_CH3CKED_MEMSET(params, 0, sizeof(struct s2n_psk_parameters));
     RESULT_GUARD(s2n_array_init(&params->psk_list, sizeof(struct s2n_psk)));
     return S2N_RESULT_OK;
 }
@@ -673,7 +673,7 @@ int s2n_connection_get_negotiated_psk_identity(struct s2n_connection *conn, uint
     }
 
     POSIX_ENSURE(chosen_psk->identity.size <= max_identity_length, S2N_ERR_INSUFFICIENT_MEM_SIZE);
-    POSIX_CHECKED_MEMCPY(identity, chosen_psk->identity.data, chosen_psk->identity.size);
+    POSIX_CH3CKED_MEMCPY(identity, chosen_psk->identity.data, chosen_psk->identity.size);
 
     return S2N_SUCCESS;
 }

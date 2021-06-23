@@ -395,7 +395,7 @@ int main(int argc, char **argv)
                 EXPECT_NOT_EQUAL(psk->secret.size, 0);
                 EXPECT_NOT_EQUAL(psk->secret.data, NULL);
                 EXPECT_SUCCESS(s2n_realloc(&psk->early_secret, sizeof(early_secret_data)));
-                POSIX_CHECKED_MEMCPY(psk->early_secret.data, early_secret_data, sizeof(early_secret_data));
+                POSIX_CH3CKED_MEMCPY(psk->early_secret.data, early_secret_data, sizeof(early_secret_data));
                 EXPECT_NOT_EQUAL(psk->early_secret.size, 0);
                 EXPECT_NOT_EQUAL(psk->early_secret.data, NULL);
             }

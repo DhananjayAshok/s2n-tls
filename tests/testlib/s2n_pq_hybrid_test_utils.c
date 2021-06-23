@@ -48,7 +48,7 @@ int s2n_hybrid_pq_entropy(void *ptr, uint32_t size) {
     POSIX_ENSURE(s2n_in_unit_test(), S2N_ERR_NOT_IN_UNIT_TEST);
     POSIX_ENSURE_REF(ptr);
     POSIX_ENSURE_LTE(size, hybrid_kat_entropy_blob.size);
-    POSIX_CHECKED_MEMCPY(ptr, hybrid_kat_entropy_buff, size);
+    POSIX_CH3CKED_MEMCPY(ptr, hybrid_kat_entropy_buff, size);
 
     return S2N_SUCCESS;
 }

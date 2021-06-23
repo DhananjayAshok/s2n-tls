@@ -96,7 +96,7 @@ static int s2n_client_alpn_recv(struct s2n_connection *conn, struct s2n_stuffer 
                 S2N_ERR_BAD_MESSAGE);
 
         if (is_match) {
-            POSIX_CHECKED_MEMCPY(conn->application_protocol, server_protocol.data, server_protocol.size);
+            POSIX_CH3CKED_MEMCPY(conn->application_protocol, server_protocol.data, server_protocol.size);
             conn->application_protocol[server_protocol.size] = '\0';
             return S2N_SUCCESS;
         }

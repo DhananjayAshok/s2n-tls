@@ -167,7 +167,7 @@ int s2n_cert_chain_and_key_set_ocsp_data(struct s2n_cert_chain_and_key *chain_an
     POSIX_GUARD(s2n_free(&chain_and_key->ocsp_status));
     if (data && length) {
         POSIX_GUARD(s2n_alloc(&chain_and_key->ocsp_status, length));
-        POSIX_CHECKED_MEMCPY(chain_and_key->ocsp_status.data, data, length);
+        POSIX_CH3CKED_MEMCPY(chain_and_key->ocsp_status.data, data, length);
     }
     return 0;
 }
@@ -178,7 +178,7 @@ int s2n_cert_chain_and_key_set_sct_list(struct s2n_cert_chain_and_key *chain_and
     POSIX_GUARD(s2n_free(&chain_and_key->sct_list));
     if (data && length) {
         POSIX_GUARD(s2n_alloc(&chain_and_key->sct_list, length));
-        POSIX_CHECKED_MEMCPY(chain_and_key->sct_list.data, data, length);
+        POSIX_CH3CKED_MEMCPY(chain_and_key->sct_list.data, data, length);
     }
     return 0;
 }
@@ -261,7 +261,7 @@ int s2n_cert_chain_and_key_load_sans(struct s2n_cert_chain_and_key *chain_and_ke
                 S2N_ERROR_PRESERVE_ERRNO();
             }
 
-            POSIX_CHECKED_MEMCPY(san_blob->data, san_str, san_str_len);
+            POSIX_CH3CKED_MEMCPY(san_blob->data, san_str, san_str_len);
             san_blob->size = san_str_len;
             /* normalize san_blob to lowercase */
             POSIX_GUARD(s2n_blob_char_to_lower(san_blob));
@@ -325,7 +325,7 @@ int s2n_cert_chain_and_key_load_cns(struct s2n_cert_chain_and_key *chain_and_key
             if (s2n_alloc(cn_name, utf8_out_len) < 0) {
                 S2N_ERROR_PRESERVE_ERRNO();
             }
-            POSIX_CHECKED_MEMCPY(cn_name->data, utf8_str, utf8_out_len);
+            POSIX_CH3CKED_MEMCPY(cn_name->data, utf8_str, utf8_out_len);
             cn_name->size = utf8_out_len;
             /* normalize cn_name to lowercase */
             POSIX_GUARD(s2n_blob_char_to_lower(cn_name));
@@ -701,7 +701,7 @@ static int s2n_utf8_string_from_extension_data(const uint8_t *extension_data, ui
         */ 
         unsigned char *internal_data = ASN1_STRING_data(asn1_str);
         POSIX_ENSURE_REF(internal_data);
-        POSIX_CHECKED_MEMCPY(out_data, internal_data, len);
+        POSIX_CH3CKED_MEMCPY(out_data, internal_data, len);
     }
     *out_len = len;
     return S2N_SUCCESS; 
@@ -805,7 +805,7 @@ static int s2n_parse_x509_extension(struct s2n_cert *cert, const uint8_t *oid,
                 */
                 unsigned char *internal_data = ASN1_STRING_data(asn1_str);
                 POSIX_ENSURE_REF(internal_data);
-                POSIX_CHECKED_MEMCPY(ext_value, internal_data, len);
+                POSIX_CH3CKED_MEMCPY(ext_value, internal_data, len);
             }
             if (critical != NULL) {
                /* Retrieve the x509 extension's critical value.

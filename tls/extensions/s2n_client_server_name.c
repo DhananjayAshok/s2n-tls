@@ -97,7 +97,7 @@ static int s2n_client_server_name_recv(struct s2n_connection *conn, struct s2n_s
 
     uint8_t *server_name;
     POSIX_ENSURE_REF(server_name = s2n_stuffer_raw_read(extension, server_name_len));
-    POSIX_CHECKED_MEMCPY(conn->server_name, server_name, server_name_len);
+    POSIX_CH3CKED_MEMCPY(conn->server_name, server_name, server_name_len);
 
     return S2N_SUCCESS;
 }

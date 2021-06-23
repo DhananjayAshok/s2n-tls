@@ -75,13 +75,13 @@ int s2n_record_parse_cbc(
 
     /* Copy the last encrypted block to be the next IV */
     if (conn->actual_protocol_version < S2N_TLS11) {
-        POSIX_CHECKED_MEMCPY(ivpad, en.data + en.size - iv.size, iv.size);
+        POSIX_CH3CKED_MEMCPY(ivpad, en.data + en.size - iv.size, iv.size);
     }
 
     POSIX_GUARD(cipher_suite->record_alg->cipher->io.cbc.decrypt(session_key, &iv, &en, &en));
 
     if (conn->actual_protocol_version < S2N_TLS11) {
-        POSIX_CHECKED_MEMCPY(implicit_iv, ivpad, iv.size);
+        POSIX_CH3CKED_MEMCPY(implicit_iv, ivpad, iv.size);
     }
 
     /* Subtract the padding length */

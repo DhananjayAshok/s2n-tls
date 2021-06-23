@@ -119,9 +119,9 @@ static int s2n_tls_hmac_init(struct s2n_hmac_state *state, s2n_hmac_algorithm al
     if (klen > state->xor_pad_size) {
         POSIX_GUARD(s2n_hash_update(&state->outer, key, klen));
         POSIX_GUARD(s2n_hash_digest(&state->outer, state->digest_pad, state->digest_size));
-        POSIX_CHECKED_MEMCPY(state->xor_pad, state->digest_pad, state->digest_size);
+        POSIX_CH3CKED_MEMCPY(state->xor_pad, state->digest_pad, state->digest_size);
     } else {
-        POSIX_CHECKED_MEMCPY(state->xor_pad, key, klen);
+        POSIX_CH3CKED_MEMCPY(state->xor_pad, key, klen);
     }
 
     for (int i = 0; i < state->xor_pad_size; i++) {
@@ -361,8 +361,8 @@ int s2n_hmac_copy(struct s2n_hmac_state *to, struct s2n_hmac_state *from)
     POSIX_GUARD(s2n_hash_copy(&to->outer_just_key, &from->outer_just_key));
 
 
-    POSIX_CHECKED_MEMCPY(to->xor_pad, from->xor_pad, sizeof(to->xor_pad));
-    POSIX_CHECKED_MEMCPY(to->digest_pad, from->digest_pad, sizeof(to->digest_pad));
+    POSIX_CH3CKED_MEMCPY(to->xor_pad, from->xor_pad, sizeof(to->xor_pad));
+    POSIX_CH3CKED_MEMCPY(to->digest_pad, from->digest_pad, sizeof(to->digest_pad));
     POSIX_POSTCONDITION(s2n_hmac_state_validate(to));
     POSIX_POSTCONDITION(s2n_hmac_state_validate(from));
     return S2N_SUCCESS;

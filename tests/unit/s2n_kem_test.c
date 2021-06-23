@@ -459,7 +459,7 @@ int main(int argc, char **argv)
         EXPECT_SUCCESS(s2n_stuffer_init(&io_stuffer, &io_blob));
 
         EXPECT_SUCCESS(s2n_alloc(&(kem_params.public_key), TEST_PUBLIC_KEY_LENGTH));
-        POSIX_CHECKED_MEMCPY(kem_params.public_key.data, TEST_PUBLIC_KEY, TEST_PUBLIC_KEY_LENGTH);
+        POSIX_CH3CKED_MEMCPY(kem_params.public_key.data, TEST_PUBLIC_KEY, TEST_PUBLIC_KEY_LENGTH);
 
         EXPECT_SUCCESS(s2n_kem_send_ciphertext(&io_stuffer, &kem_params));
 
@@ -509,7 +509,7 @@ int main(int argc, char **argv)
         EXPECT_SUCCESS(s2n_stuffer_init(&io_stuffer, &io_blob));
 
         s2n_alloc(&(kem_params.private_key), TEST_PRIVATE_KEY_LENGTH);
-        POSIX_CHECKED_MEMCPY(kem_params.private_key.data, TEST_PRIVATE_KEY, TEST_PRIVATE_KEY_LENGTH);
+        POSIX_CH3CKED_MEMCPY(kem_params.private_key.data, TEST_PRIVATE_KEY, TEST_PRIVATE_KEY_LENGTH);
 
         /* {0, 5} = length of ciphertext to follow
          * {5, 5, 5, 5, 5} = test ciphertext */
@@ -550,7 +550,7 @@ int main(int argc, char **argv)
 
         /* The given ciphertext length doesn't match the KEM's actual ciphertext length */
         EXPECT_SUCCESS(s2n_alloc(&(kem_params.private_key), TEST_PRIVATE_KEY_LENGTH));
-        POSIX_CHECKED_MEMCPY(kem_params.private_key.data, TEST_PRIVATE_KEY, TEST_PRIVATE_KEY_LENGTH);
+        POSIX_CH3CKED_MEMCPY(kem_params.private_key.data, TEST_PRIVATE_KEY, TEST_PRIVATE_KEY_LENGTH);
         DEFER_CLEANUP(struct s2n_blob io_blob_3 = { 0 }, s2n_free);
         EXPECT_SUCCESS(s2n_alloc(&io_blob_3, TEST_CIPHERTEXT_LENGTH + 2));
         struct s2n_stuffer io_stuffer_3 = { 0 };

@@ -550,7 +550,7 @@ static S2N_RESULT s2n_async_pkey_get_input_decrypt(struct s2n_async_pkey_op *op,
 
     RESULT_ENSURE_LTE(in->size, data_len);
 
-    RESULT_CHECKED_MEMCPY(data, in->data, in->size);
+    RESULT_CH3CKED_MEMCPY(data, in->data, in->size);
 
     return S2N_RESULT_OK;
 }
@@ -600,7 +600,7 @@ static S2N_RESULT s2n_async_pkey_op_set_output_decrypt(struct s2n_async_pkey_op 
     struct s2n_blob *out = &decrypt->decrypted;
 
     RESULT_GUARD_POSIX(s2n_realloc(out, data_len));
-    RESULT_CHECKED_MEMCPY(out->data, data, data_len);
+    RESULT_CH3CKED_MEMCPY(out->data, data, data_len);
 
     return S2N_RESULT_OK;
 }
@@ -614,7 +614,7 @@ static S2N_RESULT s2n_async_pkey_op_set_output_sign(struct s2n_async_pkey_op *op
     struct s2n_blob *sigcopy = &sign->signature;
 
     RESULT_GUARD_POSIX(s2n_realloc(sigcopy, data_len));
-    RESULT_CHECKED_MEMCPY(sigcopy->data, data, data_len);
+    RESULT_CH3CKED_MEMCPY(sigcopy->data, data, data_len);
 
     return S2N_RESULT_OK;
 }

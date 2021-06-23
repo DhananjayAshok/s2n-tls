@@ -132,7 +132,7 @@ ssize_t s2n_client_hello_get_cipher_suites(struct s2n_client_hello *ch, uint8_t 
 
     uint32_t len = min_size(&ch->cipher_suites, max_length);
 
-    POSIX_CHECKED_MEMCPY(out, &ch->cipher_suites.data, len);
+    POSIX_CH3CKED_MEMCPY(out, &ch->cipher_suites.data, len);
 
     return len;
 }
@@ -151,7 +151,7 @@ ssize_t s2n_client_hello_get_extensions(struct s2n_client_hello *ch, uint8_t *ou
 
     uint32_t len = min_size(&ch->extensions.raw, max_length);
 
-    POSIX_CHECKED_MEMCPY(out, &ch->extensions.raw.data, len);
+    POSIX_CH3CKED_MEMCPY(out, &ch->extensions.raw.data, len);
 
     return len;
 }
@@ -559,6 +559,6 @@ ssize_t s2n_client_hello_get_extension_by_id(struct s2n_client_hello *ch, s2n_tl
     }
 
     uint32_t len = min_size(&parsed_extension->extension, max_length);
-    POSIX_CHECKED_MEMCPY(out, parsed_extension->extension.data, len);
+    POSIX_CH3CKED_MEMCPY(out, parsed_extension->extension.data, len);
     return len;
 }

@@ -91,7 +91,7 @@ int s2n_dup(struct s2n_blob *from, struct s2n_blob *to)
 
     POSIX_GUARD(s2n_alloc(to, from->size));
     
-    POSIX_CHECKED_MEMCPY(to->data, from->data, to->size);
+    POSIX_CH3CKED_MEMCPY(to->data, from->data, to->size);
 
     return 0;
 }

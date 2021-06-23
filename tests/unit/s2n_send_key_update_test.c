@@ -58,12 +58,12 @@ static int s2n_test_init_encryption(struct s2n_connection *conn)
     POSIX_GUARD(cipher_suite->record_alg->cipher->set_decryption_key(client_session_key, &key));
 
     /* Initialized secrets */
-    POSIX_CHECKED_MEMCPY(conn->secure.server_app_secret, application_secret.data, application_secret.size);
-    POSIX_CHECKED_MEMCPY(conn->secure.client_app_secret, application_secret.data, application_secret.size);
+    POSIX_CH3CKED_MEMCPY(conn->secure.server_app_secret, application_secret.data, application_secret.size);
+    POSIX_CH3CKED_MEMCPY(conn->secure.client_app_secret, application_secret.data, application_secret.size);
  
     /* Copy iv bytes from input data */
-    POSIX_CHECKED_MEMCPY(server_implicit_iv, iv.data, iv.size);
-    POSIX_CHECKED_MEMCPY(client_implicit_iv, iv.data, iv.size);
+    POSIX_CH3CKED_MEMCPY(server_implicit_iv, iv.data, iv.size);
+    POSIX_CH3CKED_MEMCPY(client_implicit_iv, iv.data, iv.size);
  
     return S2N_SUCCESS;
 }

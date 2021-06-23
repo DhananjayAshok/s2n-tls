@@ -25,8 +25,8 @@ index 3405781..3beeacf 100644
      POSIX_GUARD(s2n_hash_copy(&to->outer_just_key, &from->outer_just_key));
 
 
--    POSIX_CHECKED_MEMCPY(to->xor_pad, from->xor_pad, sizeof(to->xor_pad));
--    POSIX_CHECKED_MEMCPY(to->digest_pad, from->digest_pad, sizeof(to->digest_pad));
+-    POSIX_CH3CKED_MEMCPY(to->xor_pad, from->xor_pad, sizeof(to->xor_pad));
+-    POSIX_CH3CKED_MEMCPY(to->digest_pad, from->digest_pad, sizeof(to->digest_pad));
 +    //memcpy_check(to->xor_pad, from->xor_pad, sizeof(to->xor_pad));
 +    //memcpy_check(to->digest_pad, from->digest_pad, sizeof(to->digest_pad));
      POSIX_POSTCONDITION(s2n_hmac_state_validate(to));

@@ -44,7 +44,7 @@ static S2N_RESULT s2n_array_enlarge(struct s2n_array *array, uint32_t capacity)
     /* Zero the extened part */
     uint32_t array_elements_size;
     RESULT_GUARD_POSIX(s2n_mul_overflow(array->element_size, array->len, &array_elements_size));
-    RESULT_CHECKED_MEMSET(array->mem.data + array_elements_size, 0, array->mem.size - array_elements_size);
+    RESULT_CH3CKED_MEMSET(array->mem.data + array_elements_size, 0, array->mem.size - array_elements_size);
     RESULT_GUARD(s2n_array_validate(array));
     return S2N_RESULT_OK;
 }
@@ -96,7 +96,7 @@ S2N_RESULT s2n_array_insert_and_copy(struct s2n_array *array, uint32_t idx, void
 {
     void* insert_location = NULL;
     RESULT_GUARD(s2n_array_insert(array, idx, &insert_location));
-    RESULT_CHECKED_MEMCPY(insert_location, element, array->element_size);
+    RESULT_CH3CKED_MEMCPY(insert_location, element, array->element_size);
     return S2N_RESULT_OK;
 }
 
@@ -148,7 +148,7 @@ S2N_RESULT s2n_array_remove(struct s2n_array *array, uint32_t idx)
     array->len--;
 
     /* After shifting, zero the last element */
-    RESULT_CHECKED_MEMSET(array->mem.data + array->element_size * array->len,
+    RESULT_CH3CKED_MEMSET(array->mem.data + array->element_size * array->len,
                    0,
                    array->element_size);
 

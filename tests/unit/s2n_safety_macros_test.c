@@ -203,15 +203,15 @@ static s2n_result RESULT_POSTCONDITION_harness(s2n_result result)
     return S2N_RESULT_OK;
 }
 
-static s2n_result RESULT_CHECKED_MEMCPY_harness(uint32_t* dest, uint32_t* source, size_t len)
+static s2n_result RESULT_CH3CKED_MEMCPY_harness(uint32_t* dest, uint32_t* source, size_t len)
 {
-    RESULT_CHECKED_MEMCPY(dest, source, len);
+    RESULT_CH3CKED_MEMCPY(dest, source, len);
     return S2N_RESULT_OK;
 }
 
-static s2n_result RESULT_CHECKED_MEMSET_harness(uint32_t* dest, uint8_t value, size_t len)
+static s2n_result RESULT_CH3CKED_MEMSET_harness(uint32_t* dest, uint8_t value, size_t len)
 {
-    RESULT_CHECKED_MEMSET(dest, value, len);
+    RESULT_CH3CKED_MEMSET(dest, value, len);
     return S2N_RESULT_OK;
 }
 
@@ -403,15 +403,15 @@ static int POSIX_POSTCONDITION_harness(s2n_result result)
     return S2N_SUCCESS;
 }
 
-static int POSIX_CHECKED_MEMCPY_harness(uint32_t* dest, uint32_t* source, size_t len)
+static int POSIX_CH3CKED_MEMCPY_harness(uint32_t* dest, uint32_t* source, size_t len)
 {
-    POSIX_CHECKED_MEMCPY(dest, source, len);
+    POSIX_CH3CKED_MEMCPY(dest, source, len);
     return S2N_SUCCESS;
 }
 
-static int POSIX_CHECKED_MEMSET_harness(uint32_t* dest, uint8_t value, size_t len)
+static int POSIX_CH3CKED_MEMSET_harness(uint32_t* dest, uint8_t value, size_t len)
 {
-    POSIX_CHECKED_MEMSET(dest, value, len);
+    POSIX_CH3CKED_MEMSET(dest, value, len);
     return S2N_SUCCESS;
 }
 
@@ -603,15 +603,15 @@ static const char* PTR_POSTCONDITION_harness(s2n_result result)
     return "ok";
 }
 
-static const char* PTR_CHECKED_MEMCPY_harness(uint32_t* dest, uint32_t* source, size_t len)
+static const char* PTR_CH3CKED_MEMCPY_harness(uint32_t* dest, uint32_t* source, size_t len)
 {
-    PTR_CHECKED_MEMCPY(dest, source, len);
+    PTR_CH3CKED_MEMCPY(dest, source, len);
     return "ok";
 }
 
-static const char* PTR_CHECKED_MEMSET_harness(uint32_t* dest, uint8_t value, size_t len)
+static const char* PTR_CH3CKED_MEMSET_harness(uint32_t* dest, uint8_t value, size_t len)
 {
-    PTR_CHECKED_MEMSET(dest, value, len);
+    PTR_CH3CKED_MEMSET(dest, value, len);
     return "ok";
 }
 
@@ -740,23 +740,23 @@ int main(int argc, char **argv)
     EXPECT_ERROR_WITH_ERRNO(RESULT_POSTCONDITION_harness(RESULT_POSTCONDITION_harness_check(false)), S2N_ERR_SAFETY);
     #endif
 
-    /* RESULT_CHECKED_MEMCPY(destination, source, len) */
-    uint32_t RESULT__checked_memcpy_dest = 1;
-    uint32_t RESULT__checked_memcpy_source = 2;
-    EXPECT_OK(RESULT_CHECKED_MEMCPY_harness(&RESULT__checked_memcpy_dest, &RESULT__checked_memcpy_source, 0));
-    EXPECT_EQUAL(RESULT__checked_memcpy_dest, 1);
-    EXPECT_ERROR_WITH_ERRNO(RESULT_CHECKED_MEMCPY_harness(NULL, &RESULT__checked_memcpy_source, 4), S2N_ERR_NULL);
-    EXPECT_ERROR_WITH_ERRNO(RESULT_CHECKED_MEMCPY_harness(&RESULT__checked_memcpy_dest, NULL, 4), S2N_ERR_NULL);
-    EXPECT_OK(RESULT_CHECKED_MEMCPY_harness(&RESULT__checked_memcpy_dest, &RESULT__checked_memcpy_source, 4));
-    EXPECT_EQUAL(RESULT__checked_memcpy_dest, RESULT__checked_memcpy_source);
+    /* RESULT_CH3CKED_MEMCPY(destination, source, len) */
+    uint32_t RESULT__CH3CKED_memcpy_dest = 1;
+    uint32_t RESULT__CH3CKED_memcpy_source = 2;
+    EXPECT_OK(RESULT_CH3CKED_MEMCPY_harness(&RESULT__CH3CKED_memcpy_dest, &RESULT__CH3CKED_memcpy_source, 0));
+    EXPECT_EQUAL(RESULT__CH3CKED_memcpy_dest, 1);
+    EXPECT_ERROR_WITH_ERRNO(RESULT_CH3CKED_MEMCPY_harness(NULL, &RESULT__CH3CKED_memcpy_source, 4), S2N_ERR_NULL);
+    EXPECT_ERROR_WITH_ERRNO(RESULT_CH3CKED_MEMCPY_harness(&RESULT__CH3CKED_memcpy_dest, NULL, 4), S2N_ERR_NULL);
+    EXPECT_OK(RESULT_CH3CKED_MEMCPY_harness(&RESULT__CH3CKED_memcpy_dest, &RESULT__CH3CKED_memcpy_source, 4));
+    EXPECT_EQUAL(RESULT__CH3CKED_memcpy_dest, RESULT__CH3CKED_memcpy_source);
 
-    /* RESULT_CHECKED_MEMSET(destination, value, len) */
-    uint32_t RESULT__checked_memset_dest = 1;
-    EXPECT_OK(RESULT_CHECKED_MEMSET_harness(&RESULT__checked_memset_dest, 0x42, 0));
-    EXPECT_EQUAL(RESULT__checked_memset_dest, 1);
-    EXPECT_ERROR_WITH_ERRNO(RESULT_CHECKED_MEMSET_harness(NULL, 0x42, 1), S2N_ERR_NULL);
-    EXPECT_OK(RESULT_CHECKED_MEMSET_harness(&RESULT__checked_memset_dest, 0x42, 4));
-    EXPECT_EQUAL(RESULT__checked_memset_dest, 0x42424242);
+    /* RESULT_CH3CKED_MEMSET(destination, value, len) */
+    uint32_t RESULT__CH3CKED_memset_dest = 1;
+    EXPECT_OK(RESULT_CH3CKED_MEMSET_harness(&RESULT__CH3CKED_memset_dest, 0x42, 0));
+    EXPECT_EQUAL(RESULT__CH3CKED_memset_dest, 1);
+    EXPECT_ERROR_WITH_ERRNO(RESULT_CH3CKED_MEMSET_harness(NULL, 0x42, 1), S2N_ERR_NULL);
+    EXPECT_OK(RESULT_CH3CKED_MEMSET_harness(&RESULT__CH3CKED_memset_dest, 0x42, 4));
+    EXPECT_EQUAL(RESULT__CH3CKED_memset_dest, 0x42424242);
 
     /* RESULT_GUARD(result) */
     EXPECT_OK(RESULT_GUARD_harness(RESULT_ENSURE_harness(true)));
@@ -875,23 +875,23 @@ int main(int argc, char **argv)
     EXPECT_FAILURE_WITH_ERRNO(POSIX_POSTCONDITION_harness(POSIX_POSTCONDITION_harness_check(false)), S2N_ERR_SAFETY);
     #endif
 
-    /* POSIX_CHECKED_MEMCPY(destination, source, len) */
-    uint32_t POSIX__checked_memcpy_dest = 1;
-    uint32_t POSIX__checked_memcpy_source = 2;
-    EXPECT_SUCCESS(POSIX_CHECKED_MEMCPY_harness(&POSIX__checked_memcpy_dest, &POSIX__checked_memcpy_source, 0));
-    EXPECT_EQUAL(POSIX__checked_memcpy_dest, 1);
-    EXPECT_FAILURE_WITH_ERRNO(POSIX_CHECKED_MEMCPY_harness(NULL, &POSIX__checked_memcpy_source, 4), S2N_ERR_NULL);
-    EXPECT_FAILURE_WITH_ERRNO(POSIX_CHECKED_MEMCPY_harness(&POSIX__checked_memcpy_dest, NULL, 4), S2N_ERR_NULL);
-    EXPECT_SUCCESS(POSIX_CHECKED_MEMCPY_harness(&POSIX__checked_memcpy_dest, &POSIX__checked_memcpy_source, 4));
-    EXPECT_EQUAL(POSIX__checked_memcpy_dest, POSIX__checked_memcpy_source);
+    /* POSIX_CH3CKED_MEMCPY(destination, source, len) */
+    uint32_t POSIX__CH3CKED_memcpy_dest = 1;
+    uint32_t POSIX__CH3CKED_memcpy_source = 2;
+    EXPECT_SUCCESS(POSIX_CH3CKED_MEMCPY_harness(&POSIX__CH3CKED_memcpy_dest, &POSIX__CH3CKED_memcpy_source, 0));
+    EXPECT_EQUAL(POSIX__CH3CKED_memcpy_dest, 1);
+    EXPECT_FAILURE_WITH_ERRNO(POSIX_CH3CKED_MEMCPY_harness(NULL, &POSIX__CH3CKED_memcpy_source, 4), S2N_ERR_NULL);
+    EXPECT_FAILURE_WITH_ERRNO(POSIX_CH3CKED_MEMCPY_harness(&POSIX__CH3CKED_memcpy_dest, NULL, 4), S2N_ERR_NULL);
+    EXPECT_SUCCESS(POSIX_CH3CKED_MEMCPY_harness(&POSIX__CH3CKED_memcpy_dest, &POSIX__CH3CKED_memcpy_source, 4));
+    EXPECT_EQUAL(POSIX__CH3CKED_memcpy_dest, POSIX__CH3CKED_memcpy_source);
 
-    /* POSIX_CHECKED_MEMSET(destination, value, len) */
-    uint32_t POSIX__checked_memset_dest = 1;
-    EXPECT_SUCCESS(POSIX_CHECKED_MEMSET_harness(&POSIX__checked_memset_dest, 0x42, 0));
-    EXPECT_EQUAL(POSIX__checked_memset_dest, 1);
-    EXPECT_FAILURE_WITH_ERRNO(POSIX_CHECKED_MEMSET_harness(NULL, 0x42, 1), S2N_ERR_NULL);
-    EXPECT_SUCCESS(POSIX_CHECKED_MEMSET_harness(&POSIX__checked_memset_dest, 0x42, 4));
-    EXPECT_EQUAL(POSIX__checked_memset_dest, 0x42424242);
+    /* POSIX_CH3CKED_MEMSET(destination, value, len) */
+    uint32_t POSIX__CH3CKED_memset_dest = 1;
+    EXPECT_SUCCESS(POSIX_CH3CKED_MEMSET_harness(&POSIX__CH3CKED_memset_dest, 0x42, 0));
+    EXPECT_EQUAL(POSIX__CH3CKED_memset_dest, 1);
+    EXPECT_FAILURE_WITH_ERRNO(POSIX_CH3CKED_MEMSET_harness(NULL, 0x42, 1), S2N_ERR_NULL);
+    EXPECT_SUCCESS(POSIX_CH3CKED_MEMSET_harness(&POSIX__CH3CKED_memset_dest, 0x42, 4));
+    EXPECT_EQUAL(POSIX__CH3CKED_memset_dest, 0x42424242);
 
     /* POSIX_GUARD(result) */
     EXPECT_SUCCESS(POSIX_GUARD_harness(POSIX_ENSURE_harness(true)));
@@ -1010,23 +1010,23 @@ int main(int argc, char **argv)
     EXPECT_NULL_WITH_ERRNO(PTR_POSTCONDITION_harness(PTR_POSTCONDITION_harness_check(false)), S2N_ERR_SAFETY);
     #endif
 
-    /* PTR_CHECKED_MEMCPY(destination, source, len) */
-    uint32_t PTR__checked_memcpy_dest = 1;
-    uint32_t PTR__checked_memcpy_source = 2;
-    EXPECT_NOT_NULL(PTR_CHECKED_MEMCPY_harness(&PTR__checked_memcpy_dest, &PTR__checked_memcpy_source, 0));
-    EXPECT_EQUAL(PTR__checked_memcpy_dest, 1);
-    EXPECT_NULL_WITH_ERRNO(PTR_CHECKED_MEMCPY_harness(NULL, &PTR__checked_memcpy_source, 4), S2N_ERR_NULL);
-    EXPECT_NULL_WITH_ERRNO(PTR_CHECKED_MEMCPY_harness(&PTR__checked_memcpy_dest, NULL, 4), S2N_ERR_NULL);
-    EXPECT_NOT_NULL(PTR_CHECKED_MEMCPY_harness(&PTR__checked_memcpy_dest, &PTR__checked_memcpy_source, 4));
-    EXPECT_EQUAL(PTR__checked_memcpy_dest, PTR__checked_memcpy_source);
+    /* PTR_CH3CKED_MEMCPY(destination, source, len) */
+    uint32_t PTR__CH3CKED_memcpy_dest = 1;
+    uint32_t PTR__CH3CKED_memcpy_source = 2;
+    EXPECT_NOT_NULL(PTR_CH3CKED_MEMCPY_harness(&PTR__CH3CKED_memcpy_dest, &PTR__CH3CKED_memcpy_source, 0));
+    EXPECT_EQUAL(PTR__CH3CKED_memcpy_dest, 1);
+    EXPECT_NULL_WITH_ERRNO(PTR_CH3CKED_MEMCPY_harness(NULL, &PTR__CH3CKED_memcpy_source, 4), S2N_ERR_NULL);
+    EXPECT_NULL_WITH_ERRNO(PTR_CH3CKED_MEMCPY_harness(&PTR__CH3CKED_memcpy_dest, NULL, 4), S2N_ERR_NULL);
+    EXPECT_NOT_NULL(PTR_CH3CKED_MEMCPY_harness(&PTR__CH3CKED_memcpy_dest, &PTR__CH3CKED_memcpy_source, 4));
+    EXPECT_EQUAL(PTR__CH3CKED_memcpy_dest, PTR__CH3CKED_memcpy_source);
 
-    /* PTR_CHECKED_MEMSET(destination, value, len) */
-    uint32_t PTR__checked_memset_dest = 1;
-    EXPECT_NOT_NULL(PTR_CHECKED_MEMSET_harness(&PTR__checked_memset_dest, 0x42, 0));
-    EXPECT_EQUAL(PTR__checked_memset_dest, 1);
-    EXPECT_NULL_WITH_ERRNO(PTR_CHECKED_MEMSET_harness(NULL, 0x42, 1), S2N_ERR_NULL);
-    EXPECT_NOT_NULL(PTR_CHECKED_MEMSET_harness(&PTR__checked_memset_dest, 0x42, 4));
-    EXPECT_EQUAL(PTR__checked_memset_dest, 0x42424242);
+    /* PTR_CH3CKED_MEMSET(destination, value, len) */
+    uint32_t PTR__CH3CKED_memset_dest = 1;
+    EXPECT_NOT_NULL(PTR_CH3CKED_MEMSET_harness(&PTR__CH3CKED_memset_dest, 0x42, 0));
+    EXPECT_EQUAL(PTR__CH3CKED_memset_dest, 1);
+    EXPECT_NULL_WITH_ERRNO(PTR_CH3CKED_MEMSET_harness(NULL, 0x42, 1), S2N_ERR_NULL);
+    EXPECT_NOT_NULL(PTR_CH3CKED_MEMSET_harness(&PTR__CH3CKED_memset_dest, 0x42, 4));
+    EXPECT_EQUAL(PTR__CH3CKED_memset_dest, 0x42424242);
 
     /* PTR_GUARD(result) */
     EXPECT_NOT_NULL(PTR_GUARD_harness(PTR_ENSURE_harness(true)));
