@@ -9,4 +9,5 @@ utils/s2n_safety.c \
 utils/s2n_blob.c \
 utils/s2n_mem.c \
 --wildptrstats-output=checked-c-scripts/3c_command_1_wildptrstats.json \
---perptrstats-output=checked-c-scripts/3c_command_1_perptrstats.json
+--perptrstats-output=checked-c-scripts/3c_command_1_perptrstats.json \
+--dump-stats
