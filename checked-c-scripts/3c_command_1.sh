@@ -10,4 +10,6 @@ utils/s2n_blob.c \
 utils/s2n_mem.c \
 --wildptrstats-output=checked-c-scripts/3c_command_1_wildptrstats.json \
 --perptrstats-output=checked-c-scripts/3c_command_1_perptrstats.json \
---dump-stats
+ --constraint-output=checked-c-scripts/3c_command_1_constraint.json \
+ --stats-output=checked-c-scripts/3c_command_1_stats.json \
+--dump-stats 
