@@ -8,8 +8,8 @@ stuffer/s2n_stuffer.c \
 utils/s2n_safety.c \
 utils/s2n_blob.c \
 utils/s2n_mem.c \
---wildptrstats-output=checked-c-scripts/3c_command_1_wildptrstats.json \
---perptrstats-output=checked-c-scripts/3c_command_1_perptrstats.json \
- --constraint-output=checked-c-scripts/3c_command_1_constraint.json \
- --stats-output=checked-c-scripts/3c_command_1_stats.json \
+--wildptrstats-output=checked-c-scripts/3c_1_wildptrstats.json \
+--perptrstats-output=checked-c-scripts/3c_1_perptrstats.json \
+ --constraint-output=checked-c-scripts/3c_1_constraint.json \
+ --stats-output=checked-c-scripts/3c_1_stats.json \
 --dump-stats 
