@@ -198,7 +198,7 @@ try_compile(
         FALL_THROUGH_SUPPORTED
         ${CMAKE_BINARY_DIR}
         SOURCES "${CMAKE_CURRENT_LIST_DIR}/tests/features/fallthrough.c"
-        COMPILE_DEFINITIONS "-Werror"
+        COMPILE_DEFINITIONS ""
 )
 
 # Determine if __restrict__ is available
@@ -206,7 +206,7 @@ try_compile(
         __RESTRICT__SUPPORTED
         ${CMAKE_BINARY_DIR}
         SOURCES "${CMAKE_CURRENT_LIST_DIR}/tests/features/__restrict__.c"
-        COMPILE_DEFINITIONS "-Werror"
+        COMPILE_DEFINITIONS ""
 )
 
 if(APPLE)
@@ -251,7 +251,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE -pedantic -std=gnu99 -Wall -Wimpl
 )
 
 if (UNSAFE_TREAT_WARNINGS_AS_ERRORS)
-    target_compile_options(${PROJECT_NAME} PRIVATE -Werror )
+    target_compile_options(${PROJECT_NAME} PRIVATE  )
 endif ()
 
 if(BUILD_TESTING AND BUILD_SHARED_LIBS)
@@ -424,7 +424,7 @@ if (BUILD_TESTING)
             target_link_libraries(${benchmark_name} PUBLIC ${PROJECT_NAME} testss2n benchmark::benchmark)
 
             # Based off the flags in tests/benchmark/Makefile
-            target_compile_options(${benchmark_name} PRIVATE -pedantic -Wall -Werror -Wunused -Wcomment -Wchar-subscripts
+            target_compile_options(${benchmark_name} PRIVATE -pedantic -Wall  -Wunused -Wcomment -Wchar-subscripts
                     -Wuninitialized -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings -Wno-deprecated-declarations
                     -Wno-unknown-pragmas -Wformat-security -Wno-missing-braces -fvisibility=hidden -Wno-unreachable-code
                     -Wno-unused-but-set-variable)
