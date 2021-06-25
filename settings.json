@@ -1,0 +1,10 @@
+{"clangd.path":"/Users/dhananas/CheckedC/build/bin/clangd3c",
+"clangd.arguments": [
+"-log=verbose",
+"-dump-stats",
+"-alltypes",
+"-p",
+"./compile_commands.json",
+"-extra-arg=-w",
+"-base-dir=."]
+}
