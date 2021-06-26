@@ -283,7 +283,7 @@ typedef enum {
 } s2n_error;
 
 #define S2N_DEBUG_STR_LEN 128
-extern __thread const char *s2n_debug_str;
+extern __thread const char *s2n_debug_str: itype(_Array_ptr<const char>);
 
 #define TO_STRING(s) #s
 #define STRING_(s) TO_STRING(s)

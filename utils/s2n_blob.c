@@ -25,6 +25,7 @@
 #include <s2n.h>
 
 S2N_RESULT s2n_blob_validate(const struct s2n_blob* b: itype(_Ptr<const struct s2n_blob>))
+_Checked
 {
     RESULT_ENSURE_REF(b);
     RESULT_DEBUG_ENSURE(S2N_IMPLIES(b->data == NULL, b->size == 0), S2N_ERR_SAFETY);
@@ -36,7 +37,8 @@ S2N_RESULT s2n_blob_validate(const struct s2n_blob* b: itype(_Ptr<const struct s
     return S2N_RESULT_OK;
 }
 
-int s2n_blob_init(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>), uint8_t * data, uint32_t size)
+int s2n_blob_init(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>), uint8_t * data: itype(_Array_ptr<uint8_t>) count(size), uint32_t size)
+_Checked
 {
     POSIX_ENSURE_REF(b);
     POSIX_ENSURE(S2N_MEM_IS_READABLE(data, size), S2N_ERR_SAFETY);
@@ -46,6 +48,7 @@ int s2n_blob_init(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>), uint8_t * da
 }
 
 int s2n_blob_zero(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>))
+_Checked
 {
     POSIX_PRECONDITION(s2n_blob_validate(b));
     POSIX_CH3CKED_MEMSET(b->data, 0, MAX(b->allocated, b->size));
