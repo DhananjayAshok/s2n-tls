@@ -24,7 +24,7 @@
 
 #include <s2n.h>
 
-S2N_RESULT s2n_blob_validate(const struct s2n_blob* b)
+S2N_RESULT s2n_blob_validate(_Ptr<const struct s2n_blob> b)
 {
     RESULT_ENSURE_REF(b);
     RESULT_DEBUG_ENSURE(S2N_IMPLIES(b->data == NULL, b->size == 0), S2N_ERR_SAFETY);
