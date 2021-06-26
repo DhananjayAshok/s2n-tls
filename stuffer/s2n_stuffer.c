@@ -23,7 +23,8 @@
 #include "utils/s2n_blob.h"
 #include "utils/s2n_mem.h"
 
-S2N_RESULT s2n_stuffer_validate(const struct s2n_stuffer* stuffer)
+S2N_RESULT s2n_stuffer_validate(const struct s2n_stuffer* stuffer: itype(_Ptr<const struct s2n_stuffer>))
+_Checked
 {
     /**
      * Note that we do not assert any properties on the tainted field,

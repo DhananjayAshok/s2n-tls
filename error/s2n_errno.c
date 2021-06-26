@@ -29,7 +29,7 @@
 #endif
 
 __thread int s2n_errno;
-__thread const char *s2n_debug_str;
+__thread const char *s2n_debug_str: itype(_Nt_array_ptr<const char>);
 
 /**
  * Returns the address of the thread-local `s2n_errno` variable
