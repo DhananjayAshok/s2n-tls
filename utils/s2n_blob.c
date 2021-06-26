@@ -24,7 +24,7 @@
 
 #include <s2n.h>
 
-S2N_RESULT s2n_blob_validate(_Ptr<const struct s2n_blob> b)
+S2N_RESULT s2n_blob_validate(const struct s2n_blob* b: itype(_Ptr<const struct s2n_blob>))
 {
     RESULT_ENSURE_REF(b);
     RESULT_DEBUG_ENSURE(S2N_IMPLIES(b->data == NULL, b->size == 0), S2N_ERR_SAFETY);
@@ -36,7 +36,7 @@ S2N_RESULT s2n_blob_validate(_Ptr<const struct s2n_blob> b)
     return S2N_RESULT_OK;
 }
 
-int s2n_blob_init(struct s2n_blob *b, uint8_t * data, uint32_t size)
+int s2n_blob_init(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>), uint8_t * data, uint32_t size)
 {
     POSIX_ENSURE_REF(b);
     POSIX_ENSURE(S2N_MEM_IS_READABLE(data, size), S2N_ERR_SAFETY);
@@ -45,7 +45,7 @@ int s2n_blob_init(struct s2n_blob *b, uint8_t * data, uint32_t size)
     return S2N_SUCCESS;
 }
 
-int s2n_blob_zero(struct s2n_blob *b)
+int s2n_blob_zero(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>))
 {
     POSIX_PRECONDITION(s2n_blob_validate(b));
     POSIX_CH3CKED_MEMSET(b->data, 0, MAX(b->allocated, b->size));
@@ -53,7 +53,7 @@ int s2n_blob_zero(struct s2n_blob *b)
     return S2N_SUCCESS;
 }
 
-int s2n_blob_slice(const struct s2n_blob *b, struct s2n_blob *slice, uint32_t offset, uint32_t size)
+int s2n_blob_slice(const struct s2n_blob *b: itype(_Ptr<const struct s2n_blob>), struct s2n_blob *slice: itype(_Ptr<struct s2n_blob>), uint32_t offset, uint32_t size)
 {
     POSIX_PRECONDITION(s2n_blob_validate(b));
     POSIX_PRECONDITION(s2n_blob_validate(slice));
@@ -70,7 +70,7 @@ int s2n_blob_slice(const struct s2n_blob *b, struct s2n_blob *slice, uint32_t of
     return S2N_SUCCESS;
 }
 
-int s2n_blob_char_to_lower(struct s2n_blob *b)
+int s2n_blob_char_to_lower(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>))
 {
     POSIX_PRECONDITION(s2n_blob_validate(b));
     for (size_t i = 0; i < b->size; i++) {
@@ -82,7 +82,7 @@ int s2n_blob_char_to_lower(struct s2n_blob *b)
 
 /* An inverse map from an ascii value to a hexidecimal nibble value
  * accounts for all possible char values, where 255 is invalid value */
-static const uint8_t hex_inverse[256] = {
+static const uint8_t hex_inverse _Checked[256] = {
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
@@ -103,7 +103,7 @@ static const uint8_t hex_inverse[256] = {
 
 /* takes a hex string and writes values in the s2n_blob
  * string needs to a valid hex and blob needs to be large enough */
-int s2n_hex_string_to_bytes(const uint8_t *str, struct s2n_blob *blob)
+int s2n_hex_string_to_bytes(_Nt_array_ptr<const uint8_t> str, struct s2n_blob *blob : itype(_Ptr<struct s2n_blob>))
 {
     POSIX_ENSURE_REF(str);
     POSIX_PRECONDITION(s2n_blob_validate(blob));
