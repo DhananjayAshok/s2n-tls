@@ -195,7 +195,7 @@ int s2n_mul_overflow(uint32_t a, uint32_t b, uint32_t* out)
     return S2N_SUCCESS;
 }
 
-int s2n_add_overflow(uint32_t a, uint32_t b, uint32_t* out)
+int s2n_add_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Array_ptr<uint32_t>))
 {
     POSIX_ENSURE_REF(out);
     uint64_t result = ((uint64_t) a) + ((uint64_t) b);

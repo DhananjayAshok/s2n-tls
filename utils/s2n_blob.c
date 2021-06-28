@@ -24,6 +24,8 @@
 
 #include <s2n.h>
 
+#pragma CHECKED_SCOPE ON
+
 S2N_RESULT s2n_blob_validate(const struct s2n_blob* b: itype(_Ptr<const struct s2n_blob>))
 _Checked
 {
@@ -58,6 +60,7 @@ _Checked
 }
 
 int s2n_blob_slice(const struct s2n_blob *b: itype(_Ptr<const struct s2n_blob>), struct s2n_blob *slice: itype(_Ptr<struct s2n_blob>), uint32_t offset, uint32_t size)
+_Checked
 {
     POSIX_PRECONDITION(s2n_blob_validate(b));
     POSIX_PRECONDITION(s2n_blob_validate(slice));
@@ -75,6 +78,7 @@ int s2n_blob_slice(const struct s2n_blob *b: itype(_Ptr<const struct s2n_blob>),
 }
 
 int s2n_blob_char_to_lower(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>))
+_Checked
 {
     POSIX_PRECONDITION(s2n_blob_validate(b));
     for (size_t i = 0; i < b->size; i++) {
@@ -108,10 +112,11 @@ static const uint8_t hex_inverse _Checked[256] = {
 /* takes a hex string and writes values in the s2n_blob
  * string needs to a valid hex and blob needs to be large enough */
 int s2n_hex_string_to_bytes(_Nt_array_ptr<const uint8_t> str, struct s2n_blob *blob : itype(_Ptr<struct s2n_blob>))
+_Checked
 {
     POSIX_ENSURE_REF(str);
     POSIX_PRECONDITION(s2n_blob_validate(blob));
-    uint32_t len_with_spaces = strlen((const char*)str);
+    uint32_t len_with_spaces = strlen((_Nt_array_ptr<const char>)str);
 
     size_t i = 0, j = 0;
     while (j < len_with_spaces) {
