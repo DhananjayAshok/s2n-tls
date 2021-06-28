@@ -254,7 +254,7 @@ int s2n_stuffer_erase_and_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_read_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t * data, uint32_t size)
+int s2n_stuffer_read_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t * data: itype(_Ptr<uint8_t>), uint32_t size)
 {
     POSIX_ENSURE_REF(data);
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
@@ -267,7 +267,7 @@ int s2n_stuffer_read_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_st
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_erase_and_read_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t * data, uint32_t size)
+int s2n_stuffer_erase_and_read_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t * data: itype(_Ptr<uint8_t>), uint32_t size)
 {
     POSIX_GUARD(s2n_stuffer_skip_read(stuffer, size));
     POSIX_ENSURE_REF(stuffer->blob.data);
@@ -305,7 +305,7 @@ int s2n_stuffer_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer
     return s2n_stuffer_write_bytes(stuffer, in->data, in->size);
 }
 
-int s2n_stuffer_write_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint8_t * data, const uint32_t size)
+int s2n_stuffer_write_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint8_t * data: itype(_Ptr<const uint8_t>), const uint32_t size)
 {
     POSIX_ENSURE(S2N_MEM_IS_READABLE(data, size), S2N_ERR_SAFETY);
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
@@ -325,7 +325,7 @@ int s2n_stuffer_write_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_s
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_writev_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const struct iovec* iov, size_t iov_count, uint32_t offs, uint32_t size)
+int s2n_stuffer_writev_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const struct iovec* iov: itype(_Ptr<const struct iovec>), size_t iov_count, uint32_t offs, uint32_t size)
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(iov);

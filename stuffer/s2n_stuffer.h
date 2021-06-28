@@ -75,27 +75,27 @@ extern int s2n_stuffer_reread(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n
 extern int s2n_stuffer_rewrite(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>));
 extern int s2n_stuffer_wipe(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>));
 extern int s2n_stuffer_wipe_n(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t size);
-extern bool s2n_stuffer_is_consumed(struct s2n_stuffer *stuffer);
+extern bool s2n_stuffer_is_consumed(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>));
 
 /* Basic read and write */
-extern int s2n_stuffer_read(struct s2n_stuffer *stuffer, struct s2n_blob *out);
-extern int s2n_stuffer_erase_and_read(struct s2n_stuffer *stuffer, struct s2n_blob *out);
-extern int s2n_stuffer_write(struct s2n_stuffer *stuffer, const struct s2n_blob *in);
-extern int s2n_stuffer_read_bytes(struct s2n_stuffer *stuffer, uint8_t * out, uint32_t n);
-extern int s2n_stuffer_erase_and_read_bytes(struct s2n_stuffer *stuffer, uint8_t * data, uint32_t size);
-extern int s2n_stuffer_write_bytes(struct s2n_stuffer *stuffer, const uint8_t * in, const uint32_t n);
-extern int s2n_stuffer_writev_bytes(struct s2n_stuffer *stuffer, const struct iovec* iov, size_t iov_count, uint32_t offs, uint32_t size);
-extern int s2n_stuffer_skip_read(struct s2n_stuffer *stuffer, uint32_t n);
-extern int s2n_stuffer_skip_write(struct s2n_stuffer *stuffer, const uint32_t n);
+extern int s2n_stuffer_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_blob *out: itype(_Ptr<struct s2n_blob>));
+extern int s2n_stuffer_erase_and_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_blob *out: itype(_Ptr<struct s2n_blob>));
+extern int s2n_stuffer_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const struct s2n_blob *in: itype(_Ptr<const struct s2n_blob>));
+extern int s2n_stuffer_read_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t * data: itype(_Ptr<uint8_t>), uint32_t size);
+extern int s2n_stuffer_erase_and_read_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t * data: itype(_Ptr<uint8_t>), uint32_t size);
+extern int s2n_stuffer_write_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint8_t * data: itype(_Ptr<const uint8_t>), const uint32_t size);
+extern int s2n_stuffer_writev_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const struct iovec* iov: itype(_Ptr<const struct iovec>), size_t iov_count, uint32_t offs, uint32_t size);
+extern int s2n_stuffer_skip_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t n);
+extern int s2n_stuffer_skip_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t n);
 
 /* Tries to reserve enough space to write n additional bytes into the stuffer.*/
-extern int s2n_stuffer_reserve_space(struct s2n_stuffer *stuffer, uint32_t n);
+extern int s2n_stuffer_reserve_space(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t n);
 
 /* Raw read/write move the cursor along and give you a pointer you can
  * read/write data_len bytes from/to in-place.
  */
-extern void *s2n_stuffer_raw_write(struct s2n_stuffer *stuffer, const uint32_t data_len);
-extern void *s2n_stuffer_raw_read(struct s2n_stuffer *stuffer, uint32_t data_len);
+extern void *s2n_stuffer_raw_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t data_len);
+extern void *s2n_stuffer_raw_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t data_len);
 
 /* Send/receive stuffer to/from a file descriptor */
 extern int s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const int rfd, const uint32_t len, uint32_t *bytes_written: itype(_Ptr<uint32_t>) );
@@ -118,7 +118,7 @@ extern int s2n_stuffer_write_uint64(struct s2n_stuffer *stuffer, const uint64_t 
  * These are primarily intended to handle the vector type defined in the RFC:
  * https://tools.ietf.org/html/rfc8446#section-3.4 */
 struct s2n_stuffer_reservation {
-    struct s2n_stuffer *stuffer;
+    struct s2n_stuffer *stuffer : itype(_Ptr<struct s2n_stuffer>);
     uint32_t write_cursor;
     uint8_t length;
 };
@@ -129,7 +129,7 @@ extern int s2n_stuffer_reserve_uint24(struct s2n_stuffer *stuffer, struct s2n_st
 extern int s2n_stuffer_write_vector_size(struct s2n_stuffer_reservation *reservation);
 
 /* Copy one stuffer to another */
-extern int s2n_stuffer_copy(struct s2n_stuffer *from, struct s2n_stuffer *to, uint32_t len);
+extern int s2n_stuffer_copy(struct s2n_stuffer *from: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *to: itype(_Ptr<struct s2n_stuffer>), const uint32_t len);
 
 /* Read and write base64 */
 extern int s2n_stuffer_read_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *out);
@@ -168,4 +168,4 @@ extern bool s2n_is_base64_char(unsigned char c);
  * The old blob "out" pointed to is freed.
  * It is the responsibility of the caller to free the free "out".
  */
-extern int s2n_stuffer_extract_blob(struct s2n_stuffer *stuffer, struct s2n_blob *out);
+extern int s2n_stuffer_extract_blob(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_blob *out: itype(_Ptr<struct s2n_blob>));

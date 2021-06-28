@@ -40,7 +40,7 @@ int s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_
 
     ssize_t r = 0;
     do {
-        POSIX_ENSURE(stuffer->blob.data && (r >= 0 || errno == EINTR), S2N_ERR_READ);
+        _Unchecked {POSIX_ENSURE(stuffer->blob.data && (r >= 0 || errno == EINTR), S2N_ERR_READ);}
         r = read(rfd, stuffer->blob.data + stuffer->write_cursor, len);
     } while (r < 0);
 
@@ -63,7 +63,7 @@ int s2n_stuffer_send_to_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_st
 
     ssize_t w = 0;
     do {
-        POSIX_ENSURE(stuffer->blob.data && (w >= 0 || errno == EINTR), S2N_ERR_WRITE);
+        _Unchecked {POSIX_ENSURE(stuffer->blob.data && (w >= 0 || errno == EINTR), S2N_ERR_WRITE);}
         w = write(wfd, stuffer->blob.data + stuffer->read_cursor, len);
     } while (w < 0);
 
@@ -74,7 +74,7 @@ int s2n_stuffer_send_to_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_st
 }
 
 int s2n_stuffer_alloc_ro_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), int rfd)
-{
+_Unchecked { // Unchecked because of mmap call being vital in return
     POSIX_ENSURE_MUT(stuffer);
     struct stat st = {0};
 
@@ -83,11 +83,13 @@ int s2n_stuffer_alloc_ro_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct 
     POSIX_ENSURE(st.st_size > 0, S2N_FAILURE);
     POSIX_ENSURE(st.st_size <= UINT32_MAX, S2N_FAILURE);
 
-    _Ptr<uint8_t> map = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, rfd, 0);
+    
+    uint8_t *map = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, rfd, 0);
     POSIX_ENSURE(map != MAP_FAILED, S2N_ERR_MMAP);
 
     struct s2n_blob b = {0};
     POSIX_ENSURE(s2n_blob_init(&b, map, (uint32_t)st.st_size), S2N_FAILURE);
+    
     return s2n_stuffer_init(stuffer, &b);
 }
 
@@ -97,7 +99,7 @@ int s2n_stuffer_alloc_ro_from_file(struct s2n_stuffer *stuffer: itype(_Ptr<struc
     POSIX_ENSURE_REF(file);
     int fd;
 
-    do {
+    do _Unchecked {
         fd = open(file, O_RDONLY);
         POSIX_ENSURE(fd >= 0 || errno == EINTR, S2N_ERR_OPEN);
     } while (fd < 0);
