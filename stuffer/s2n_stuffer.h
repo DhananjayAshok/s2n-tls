@@ -132,8 +132,8 @@ extern int s2n_stuffer_write_vector_size(struct s2n_stuffer_reservation *reserva
 extern int s2n_stuffer_copy(struct s2n_stuffer *from: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *to: itype(_Ptr<struct s2n_stuffer>), const uint32_t len);
 
 /* Read and write base64 */
-extern int s2n_stuffer_read_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *out);
-extern int s2n_stuffer_write_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *in);
+extern int s2n_stuffer_read_base64(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *out: itype(_Ptr<struct s2n_stuffer>));
+extern int s2n_stuffer_write_base64(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *in: itype(_Ptr<struct s2n_stuffer>));
 
 /* Useful for text manipulation ... */
 #define s2n_stuffer_write_char( stuffer, c )  s2n_stuffer_write_uint8( (stuffer), (uint8_t) (c) )

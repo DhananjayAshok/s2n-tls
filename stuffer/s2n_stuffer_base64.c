@@ -21,7 +21,8 @@
 
 #include "utils/s2n_safety.h"
 
-static const uint8_t b64[64] = {
+
+static const uint8_t b64 _Checked[64] = {
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
     'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
@@ -43,7 +44,7 @@ static const uint8_t b64[64] = {
  *
  * Note that '=' maps to 64.
  */
-static const uint8_t b64_inverse[256] = {
+static const uint8_t b64_inverse _Checked[256] = {
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 62, 255, 255, 255, 63,
@@ -64,7 +65,7 @@ static const uint8_t b64_inverse[256] = {
 
 bool s2n_is_base64_char(unsigned char c)
 {
-    return (b64_inverse[*((uint8_t*)(&c))] != 255);
+    return (b64_inverse[*((_Ptr<uint8_t>)(&c))] != 255);
 }
 
 /**
@@ -72,7 +73,7 @@ bool s2n_is_base64_char(unsigned char c)
  * In general, shift before masking. This avoids needing to worry about how the
  * signed bit may be handled.
  */
-int s2n_stuffer_read_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *out)
+int s2n_stuffer_read_base64(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *out: itype(_Ptr<struct s2n_stuffer>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_PRECONDITION(s2n_stuffer_validate(out));
@@ -145,7 +146,7 @@ int s2n_stuffer_read_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *out
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_write_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *in)
+int s2n_stuffer_write_base64(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *in: itype(_Ptr<struct s2n_stuffer>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_PRECONDITION(s2n_stuffer_validate(in));
