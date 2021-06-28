@@ -61,20 +61,20 @@ struct s2n_stuffer {
 #define s2n_stuffer_is_wiped( s )         ((s)->high_water_mark == 0)
 #define s2n_stuffer_is_freed( s )         ((s)->blob.data == NULL)
 /* Check basic validity constraints on the stuffer: e.g. that cursors point within the blob */
-extern S2N_RESULT s2n_stuffer_validate(const struct s2n_stuffer* stuffer);
+extern S2N_RESULT s2n_stuffer_validate(const struct s2n_stuffer* stuffer: itype(_Ptr<const struct s2n_stuffer>));
 
 /* Initialize and destroying stuffers */
-extern int s2n_stuffer_init(struct s2n_stuffer *stuffer, struct s2n_blob *in);
-extern int s2n_stuffer_alloc(struct s2n_stuffer *stuffer, const uint32_t size);
-extern int s2n_stuffer_growable_alloc(struct s2n_stuffer *stuffer, const uint32_t size);
-extern int s2n_stuffer_free(struct s2n_stuffer *stuffer);
-extern int s2n_stuffer_resize(struct s2n_stuffer *stuffer, const uint32_t size);
-extern int s2n_stuffer_resize_if_empty(struct s2n_stuffer *stuffer, const uint32_t size);
-extern int s2n_stuffer_rewind_read(struct s2n_stuffer *stuffer, const uint32_t size);
-extern int s2n_stuffer_reread(struct s2n_stuffer *stuffer);
-extern int s2n_stuffer_rewrite(struct s2n_stuffer *stuffer);
-extern int s2n_stuffer_wipe(struct s2n_stuffer *stuffer);
-extern int s2n_stuffer_wipe_n(struct s2n_stuffer *stuffer, const uint32_t n);
+extern int s2n_stuffer_init(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_blob *in: itype(_Ptr<struct s2n_blob>));
+extern int s2n_stuffer_alloc(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t size);
+extern int s2n_stuffer_growable_alloc(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t size);
+extern int s2n_stuffer_free(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>));
+extern int s2n_stuffer_resize(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t size);
+extern int s2n_stuffer_resize_if_empty(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t size);
+extern int s2n_stuffer_rewind_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t size);
+extern int s2n_stuffer_reread(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>));
+extern int s2n_stuffer_rewrite(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>));
+extern int s2n_stuffer_wipe(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>));
+extern int s2n_stuffer_wipe_n(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t size);
 extern bool s2n_stuffer_is_consumed(struct s2n_stuffer *stuffer);
 
 /* Basic read and write */
@@ -123,7 +123,7 @@ struct s2n_stuffer_reservation {
     uint8_t length;
 };
 /* Check basic validity constraints on the s2n_stuffer_reservation: e.g. stuffer validity. */
-extern S2N_RESULT s2n_stuffer_reservation_validate(const struct s2n_stuffer_reservation* reservation);
+extern S2N_RESULT s2n_stuffer_reservation_validate(const struct s2n_stuffer_reservation* reservation: itype(_Ptr<const struct s2n_stuffer_reservation>));
 extern int s2n_stuffer_reserve_uint16(struct s2n_stuffer *stuffer, struct s2n_stuffer_reservation *reservation);
 extern int s2n_stuffer_reserve_uint24(struct s2n_stuffer *stuffer, struct s2n_stuffer_reservation *reservation);
 extern int s2n_stuffer_write_vector_size(struct s2n_stuffer_reservation *reservation);

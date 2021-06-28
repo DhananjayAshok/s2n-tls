@@ -26,6 +26,8 @@
 
 #include "utils/s2n_safety.h"
 
+#pragma CHECKED_SCOPE ON
+
 int s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const int rfd, const uint32_t len, uint32_t *bytes_written: itype(_Ptr<uint32_t>) )
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
@@ -81,7 +83,7 @@ int s2n_stuffer_alloc_ro_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct 
     POSIX_ENSURE(st.st_size > 0, S2N_FAILURE);
     POSIX_ENSURE(st.st_size <= UINT32_MAX, S2N_FAILURE);
 
-    uint8_t *map = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, rfd, 0);
+    _Ptr<uint8_t> map = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, rfd, 0);
     POSIX_ENSURE(map != MAP_FAILED, S2N_ERR_MMAP);
 
     struct s2n_blob b = {0};
