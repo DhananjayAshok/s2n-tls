@@ -51,6 +51,7 @@ int s2n_blob_zero(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>))
 _Checked
 {
     POSIX_PRECONDITION(s2n_blob_validate(b));
+    //memset(b->data, 0, MAX(b->allocated, b->size));
     POSIX_CH3CKED_MEMSET(b->data, 0, MAX(b->allocated, b->size));
     POSIX_POSTCONDITION(s2n_blob_validate(b));
     return S2N_SUCCESS;

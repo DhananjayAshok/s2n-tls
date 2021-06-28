@@ -63,7 +63,7 @@
     if ( s2n_likely( __tmp_n ) ) {                                               \
       __typeof( d ) __tmp_d = ( d );                                             \
       guard( __tmp_d );                                                          \
-      memset( __tmp_d, (c), __tmp_n);                                            \
+      memset( d, (c), n);                                            \
     }                                                                            \
   } while(0)
 
