@@ -26,7 +26,7 @@
 
 #include "utils/s2n_safety.h"
 
-int s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer, const int rfd, const uint32_t len, uint32_t *bytes_written)
+int s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const int rfd, const uint32_t len, uint32_t *bytes_written: itype(_Ptr<uint32_t>) )
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
 
@@ -49,7 +49,7 @@ int s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer, const int rfd, const u
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_send_to_fd(struct s2n_stuffer *stuffer, const int wfd, const uint32_t len, uint32_t *bytes_sent)
+int s2n_stuffer_send_to_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const int wfd, const uint32_t len, uint32_t *bytes_sent: itype(_Ptr<uint32_t>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
 
@@ -71,7 +71,7 @@ int s2n_stuffer_send_to_fd(struct s2n_stuffer *stuffer, const int wfd, const uin
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_alloc_ro_from_fd(struct s2n_stuffer *stuffer, int rfd)
+int s2n_stuffer_alloc_ro_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), int rfd)
 {
     POSIX_ENSURE_MUT(stuffer);
     struct stat st = {0};
@@ -89,7 +89,7 @@ int s2n_stuffer_alloc_ro_from_fd(struct s2n_stuffer *stuffer, int rfd)
     return s2n_stuffer_init(stuffer, &b);
 }
 
-int s2n_stuffer_alloc_ro_from_file(struct s2n_stuffer *stuffer, const char *file)
+int s2n_stuffer_alloc_ro_from_file(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *file: itype(_Ptr<const char>))
 {
     POSIX_ENSURE_MUT(stuffer);
     POSIX_ENSURE_REF(file);

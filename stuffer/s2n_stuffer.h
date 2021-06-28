@@ -98,8 +98,8 @@ extern void *s2n_stuffer_raw_write(struct s2n_stuffer *stuffer, const uint32_t d
 extern void *s2n_stuffer_raw_read(struct s2n_stuffer *stuffer, uint32_t data_len);
 
 /* Send/receive stuffer to/from a file descriptor */
-extern int s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer, const int rfd, const uint32_t len, uint32_t *bytes_written);
-extern int s2n_stuffer_send_to_fd(struct s2n_stuffer *stuffer, const int wfd, const uint32_t len, uint32_t *bytes_sent);
+extern int s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const int rfd, const uint32_t len, uint32_t *bytes_written: itype(_Ptr<uint32_t>) );
+extern int s2n_stuffer_send_to_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const int wfd, const uint32_t len, uint32_t *bytes_sent: itype(_Ptr<uint32_t>));
 
 /* Read and write integers in network order */
 extern int s2n_stuffer_read_uint8(struct s2n_stuffer *stuffer, uint8_t * u);
