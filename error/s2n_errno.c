@@ -29,7 +29,7 @@
 #endif
 
 __thread int s2n_errno;
-__thread const char *s2n_debug_str;
+__thread const char *s2n_debug_str: itype(_Ptr<const char>);
 
 /**
  * Returns the address of the thread-local `s2n_errno` variable
@@ -39,8 +39,8 @@ int *s2n_errno_location()
     return &s2n_errno;
 }
 
-static const char *no_such_language = "Language is not supported for error translation";
-static const char *no_such_error = "Internal s2n error";
+static _Ptr<const char> no_such_language = "Language is not supported for error translation";
+static _Ptr<const char> no_such_error = "Internal s2n error";
 
 /*
  * Define error entries with descriptions in this macro once
@@ -270,7 +270,7 @@ static const char *no_such_error = "Internal s2n error";
 #define ERR_STR_CASE(ERR, str) case ERR: return str;
 #define ERR_NAME_CASE(ERR, str) case ERR: return #ERR;
 
-const char *s2n_strerror(int error, const char *lang)
+_Ptr<const char> s2n_strerror(int error, const char *lang: itype(_Nt_array_ptr<const char>))
 {
     if (lang == NULL) {
         lang = "EN";
@@ -301,7 +301,7 @@ const char *s2n_strerror(int error, const char *lang)
     return no_such_error;
 }
 
-const char *s2n_strerror_name(int error)
+_Ptr<const char> s2n_strerror_name(int error)
 {
     s2n_error err = error;
     switch (err) {
@@ -324,7 +324,7 @@ const char *s2n_strerror_name(int error)
     return no_such_error;
 }
 
-const char *s2n_strerror_debug(int error, const char *lang)
+_Ptr<const char> s2n_strerror_debug(int error, const char *lang: itype(_Nt_array_ptr<const char>))
 {
     if (lang == NULL) {
         lang = "EN";
@@ -429,12 +429,12 @@ int s2n_calculate_stacktrace(void)
     S2N_ERROR(S2N_ERR_UNIMPLEMENTED);
 }
 
-int s2n_get_stacktrace(struct s2n_stacktrace *trace)
+int s2n_get_stacktrace(struct s2n_stacktrace *trace: itype(_Ptr<struct s2n_stacktrace>))
 {
     S2N_ERROR(S2N_ERR_UNIMPLEMENTED);
 }
 
-int s2n_print_stacktrace(FILE *fptr)
+int s2n_print_stacktrace(FILE *fptr: itype(_Ptr<FILE>))
 {
     S2N_ERROR(S2N_ERR_UNIMPLEMENTED);
 }

@@ -33,7 +33,7 @@
  *  The process ID of the current process
  */
 pid_t s2n_actual_getpid()
-{
+_Unchecked {
 #if defined(__GNUC__) && defined(SYS_getpid)
     /* http://yarchive.net/comp/linux/getpid_caching.html */
     return (pid_t) syscall(SYS_getpid);

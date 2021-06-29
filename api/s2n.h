@@ -103,11 +103,11 @@ S2N_API
 extern int s2n_config_set_monotonic_clock(struct s2n_config *config, s2n_clock_time_nanoseconds clock_fn, void *ctx);
 
 S2N_API
-extern const char *s2n_strerror(int error, const char *lang);
+extern _Ptr<const char> s2n_strerror(int error, const char *lang: itype(_Nt_array_ptr<const char>));
 S2N_API
-extern const char *s2n_strerror_debug(int error, const char *lang);
+extern  _Ptr<const char> s2n_strerror_debug(int error, const char *lang: itype(_Nt_array_ptr<const char>));
 S2N_API
-extern const char *s2n_strerror_name(int error); 
+extern _Ptr<const char> s2n_strerror_name(int error); 
 
 struct s2n_stacktrace;
 S2N_API
@@ -117,11 +117,11 @@ extern int s2n_stack_traces_enabled_set(bool newval);
 S2N_API
 extern int s2n_calculate_stacktrace(void);
 S2N_API
-extern int s2n_print_stacktrace(FILE *fptr);
+extern int s2n_print_stacktrace(FILE *fptr: itype(_Ptr<FILE>));
 S2N_API
 extern int s2n_free_stacktrace(void);
 S2N_API
-extern int s2n_get_stacktrace(struct s2n_stacktrace *trace);
+extern int s2n_get_stacktrace(struct s2n_stacktrace *trace: itype(_Ptr<struct s2n_stacktrace>));
 
 S2N_API
 extern int s2n_config_set_cache_store_callback(struct s2n_config *config, s2n_cache_store_callback cache_store_callback, void *data);
