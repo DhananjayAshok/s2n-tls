@@ -23,6 +23,8 @@
 #include "utils/s2n_blob.h"
 #include "utils/s2n_mem.h"
 
+
+
 S2N_RESULT s2n_stuffer_validate(const struct s2n_stuffer* stuffer: itype(_Ptr<const struct s2n_stuffer>))
 {
     /**
@@ -226,7 +228,7 @@ int s2n_stuffer_skip_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stu
 }
 
 void *s2n_stuffer_raw_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t data_len)
-{
+_Unchecked {
     PTR_GUARD_POSIX(s2n_stuffer_skip_read(stuffer, data_len));
 
     stuffer->tainted = 1;
@@ -242,6 +244,7 @@ int s2n_stuffer_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>
 }
 
 int s2n_stuffer_erase_and_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_blob *out: itype(_Ptr<struct s2n_blob>))
+_Unchecked
 {
     POSIX_GUARD(s2n_stuffer_skip_read(stuffer, out->size));
 
@@ -255,6 +258,7 @@ int s2n_stuffer_erase_and_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2
 }
 
 int s2n_stuffer_read_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t * data: itype(_Ptr<uint8_t>), uint32_t size)
+_Unchecked
 {
     POSIX_ENSURE_REF(data);
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
@@ -268,7 +272,7 @@ int s2n_stuffer_read_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_st
 }
 
 int s2n_stuffer_erase_and_read_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t * data: itype(_Ptr<uint8_t>), uint32_t size)
-{
+_Unchecked{
     POSIX_GUARD(s2n_stuffer_skip_read(stuffer, size));
     POSIX_ENSURE_REF(stuffer->blob.data);
     void *ptr = stuffer->blob.data + stuffer->read_cursor - size;
@@ -290,7 +294,7 @@ int s2n_stuffer_skip_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_st
 }
 
 void *s2n_stuffer_raw_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t data_len)
-{
+_Unchecked {
     PTR_GUARD_POSIX(s2n_stuffer_skip_write(stuffer, data_len));
 
     stuffer->tainted = 1;
@@ -306,7 +310,7 @@ int s2n_stuffer_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer
 }
 
 int s2n_stuffer_write_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint8_t * data: itype(_Ptr<const uint8_t>), const uint32_t size)
-{
+_Unchecked{
     POSIX_ENSURE(S2N_MEM_IS_READABLE(data, size), S2N_ERR_SAFETY);
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_GUARD(s2n_stuffer_skip_write(stuffer, size));
@@ -326,7 +330,7 @@ int s2n_stuffer_write_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_s
 }
 
 int s2n_stuffer_writev_bytes(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const struct iovec* iov: itype(_Ptr<const struct iovec>), size_t iov_count, uint32_t offs, uint32_t size)
-{
+_Unchecked {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(iov);
     void *ptr = s2n_stuffer_raw_write(stuffer, size);
@@ -361,8 +365,8 @@ static int s2n_stuffer_copy_impl(struct s2n_stuffer *from: itype(_Ptr<struct s2n
     POSIX_GUARD(s2n_stuffer_skip_read(from, len));
     POSIX_GUARD(s2n_stuffer_skip_write(to, len));
 
-    uint8_t *from_ptr = (from->blob.data) ? (from->blob.data + from->read_cursor - len) : NULL;
-    uint8_t *to_ptr = (to->blob.data) ? (to->blob.data + to->write_cursor - len) : NULL;
+    uint8_t * from_ptr = (from->blob.data) ? (from->blob.data + from->read_cursor - len) : NULL;
+    uint8_t * to_ptr = (to->blob.data) ? (to->blob.data + to->write_cursor - len) : NULL;
 
     POSIX_CH3CKED_MEMCPY(to_ptr, from_ptr, len);
 
