@@ -20,6 +20,8 @@
 #include "utils/s2n_annotations.h"
 #include "utils/s2n_safety.h"
 
+#pragma CHECKED_SCOPE ON
+
 /* Writes length bytes of input to stuffer, in network order, starting from the smallest byte of input. */
 int s2n_stuffer_write_network_order(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint64_t input, const uint8_t length)
 {

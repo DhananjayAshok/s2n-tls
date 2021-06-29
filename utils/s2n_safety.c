@@ -204,7 +204,7 @@ int s2n_add_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Array_ptr<uin
     return S2N_SUCCESS;
 }
 
-int s2n_sub_overflow(uint32_t a, uint32_t b, uint32_t* out)
+int s2n_sub_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Array_ptr<uint32_t>))
 {
     POSIX_ENSURE_REF(out);
     POSIX_ENSURE(a >= b, S2N_ERR_INTEGER_OVERFLOW);
