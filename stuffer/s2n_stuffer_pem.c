@@ -20,6 +20,8 @@
 
 #include "utils/s2n_safety.h"
 
+#pragma CHECKED_SCOPE ON
+
 #define S2N_PEM_DELIMTER_CHAR               '-'
 #define S2N_PEM_DELIMITER_MIN_COUNT         1
 #define S2N_PEM_DELIMITER_MAX_COUNT         64
@@ -72,9 +74,9 @@ static int s2n_stuffer_pem_read_end(struct s2n_stuffer *pem: itype(_Ptr<struct s
 
 static int s2n_stuffer_pem_read_contents(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *asn1: itype(_Ptr<struct s2n_stuffer>))
 {
-    s2n_stack_blob(base64__blob, 64, 64);
     struct s2n_stuffer base64_stuffer = {0};
-    POSIX_GUARD(s2n_stuffer_init(&base64_stuffer, &base64__blob));
+    _Unchecked{s2n_stack_blob(base64__blob, 64, 64);
+    POSIX_GUARD(s2n_stuffer_init(&base64_stuffer, &base64__blob));}
 
     while (1) {
         /* We need a byte... */
@@ -100,7 +102,7 @@ static int s2n_stuffer_pem_read_contents(struct s2n_stuffer *pem: itype(_Ptr<str
         }
 
         /* Copy next char to base64_stuffer */
-        POSIX_GUARD(s2n_stuffer_write_bytes(&base64_stuffer, (uint8_t *) &c, 1));
+        POSIX_GUARD(s2n_stuffer_write_bytes(&base64_stuffer, (_Ptr<uint8_t>) &c, 1));
 
     };
 
