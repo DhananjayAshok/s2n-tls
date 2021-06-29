@@ -64,6 +64,7 @@ static const uint8_t b64_inverse _Checked[256] = {
 };
 
 bool s2n_is_base64_char(unsigned char c)
+_Checked 
 {
     return (b64_inverse[*((_Ptr<uint8_t>)(&c))] != 255);
 }

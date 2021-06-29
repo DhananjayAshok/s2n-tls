@@ -102,17 +102,17 @@ extern int s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<stru
 extern int s2n_stuffer_send_to_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const int wfd, const uint32_t len, uint32_t *bytes_sent: itype(_Ptr<uint32_t>));
 
 /* Read and write integers in network order */
-extern int s2n_stuffer_read_uint8(struct s2n_stuffer *stuffer, uint8_t * u);
-extern int s2n_stuffer_read_uint16(struct s2n_stuffer *stuffer, uint16_t * u);
-extern int s2n_stuffer_read_uint24(struct s2n_stuffer *stuffer, uint32_t * u);
-extern int s2n_stuffer_read_uint32(struct s2n_stuffer *stuffer, uint32_t * u);
-extern int s2n_stuffer_read_uint64(struct s2n_stuffer *stuffer, uint64_t * u);
+extern int s2n_stuffer_read_uint8(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t * u : itype(_Ptr<uint8_t>));
+extern int s2n_stuffer_read_uint16(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint16_t * u: itype(_Ptr<uint16_t>));
+extern int s2n_stuffer_read_uint24(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t * u: itype(_Ptr<uint32_t>));
+extern int s2n_stuffer_read_uint32(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t * u: itype(_Ptr<uint32_t>));
+extern int s2n_stuffer_read_uint64(struct s2n_stuffer *stuffer : itype(_Ptr<struct s2n_stuffer>), uint64_t * u: itype(_Ptr<uint64_t>));
 
-extern int s2n_stuffer_write_uint8(struct s2n_stuffer *stuffer, const uint8_t u);
-extern int s2n_stuffer_write_uint16(struct s2n_stuffer *stuffer, const uint16_t u);
-extern int s2n_stuffer_write_uint24(struct s2n_stuffer *stuffer, const uint32_t u);
-extern int s2n_stuffer_write_uint32(struct s2n_stuffer *stuffer, const uint32_t u);
-extern int s2n_stuffer_write_uint64(struct s2n_stuffer *stuffer, const uint64_t u);
+extern int s2n_stuffer_write_uint8(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint8_t u);
+extern int s2n_stuffer_write_uint16(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint16_t u);
+extern int s2n_stuffer_write_uint24(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t u);
+extern int s2n_stuffer_write_uint32(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t u);
+extern int s2n_stuffer_write_uint64(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint64_t u);
 
 /* Allocate space now for network order integers that will be written later.
  * These are primarily intended to handle the vector type defined in the RFC:
@@ -124,9 +124,9 @@ struct s2n_stuffer_reservation {
 };
 /* Check basic validity constraints on the s2n_stuffer_reservation: e.g. stuffer validity. */
 extern S2N_RESULT s2n_stuffer_reservation_validate(const struct s2n_stuffer_reservation* reservation: itype(_Ptr<const struct s2n_stuffer_reservation>));
-extern int s2n_stuffer_reserve_uint16(struct s2n_stuffer *stuffer, struct s2n_stuffer_reservation *reservation);
-extern int s2n_stuffer_reserve_uint24(struct s2n_stuffer *stuffer, struct s2n_stuffer_reservation *reservation);
-extern int s2n_stuffer_write_vector_size(struct s2n_stuffer_reservation *reservation);
+extern int s2n_stuffer_reserve_uint16(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer_reservation *reservation: itype(_Ptr<struct s2n_stuffer_reservation>));
+extern int s2n_stuffer_reserve_uint24(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer_reservation *reservation: itype(_Ptr<struct s2n_stuffer_reservation>));
+extern int s2n_stuffer_write_vector_size(struct s2n_stuffer_reservation* reservation: itype(_Ptr<struct s2n_stuffer_reservation>));
 
 /* Copy one stuffer to another */
 extern int s2n_stuffer_copy(struct s2n_stuffer *from: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *to: itype(_Ptr<struct s2n_stuffer>), const uint32_t len);
@@ -141,26 +141,26 @@ extern int s2n_stuffer_write_base64(struct s2n_stuffer *stuffer: itype(_Ptr<stru
 #define s2n_stuffer_write_str( stuffer, c )  s2n_stuffer_write_bytes( (stuffer), (const uint8_t *) (c), strlen((c)) )
 #define s2n_stuffer_write_text( stuffer, c, n )  s2n_stuffer_write_bytes( (stuffer), (const uint8_t *) (c), (n) )
 #define s2n_stuffer_read_text( stuffer, c, n )  s2n_stuffer_read_bytes( (stuffer), (uint8_t *) (c), (n) )
-extern int s2n_stuffer_read_expected_str(struct s2n_stuffer *stuffer, const char* expected);
-extern int s2n_stuffer_peek_char(struct s2n_stuffer *stuffer, char *c);
-extern int s2n_stuffer_read_token(struct s2n_stuffer *stuffer, struct s2n_stuffer *token, char delim);
-extern int s2n_stuffer_read_line(struct s2n_stuffer *stuffer, struct s2n_stuffer *token);
-extern int s2n_stuffer_peek_check_for_str(struct s2n_stuffer *s2n_stuffer, const char *expected);
-extern int s2n_stuffer_skip_whitespace(struct s2n_stuffer *stuffer, uint32_t *skipped);
+extern int s2n_stuffer_read_expected_str(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *expected: itype(_Nt_array_ptr<const char>));
+extern int s2n_stuffer_peek_char(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), char *c: itype(_Nt_array_ptr<char>));
+extern int s2n_stuffer_read_token(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *token: itype(_Ptr<struct s2n_stuffer>), char delim);
+extern int s2n_stuffer_read_line(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *token: itype(_Ptr<struct s2n_stuffer>));
+extern int s2n_stuffer_peek_check_for_str(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), const char *expected: itype(_Nt_array_ptr<const char>));
+extern int s2n_stuffer_skip_whitespace(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t *skipped: itype(_Ptr<uint32_t>));
 extern int s2n_stuffer_skip_to_char(struct s2n_stuffer *stuffer, char target);
-extern int s2n_stuffer_skip_expected_char(struct s2n_stuffer *stuffer, const char expected, const uint32_t min, const uint32_t max, uint32_t *skipped);
-extern int s2n_stuffer_skip_read_until(struct s2n_stuffer *stuffer, const char* target);
-extern int s2n_stuffer_alloc_ro_from_string(struct s2n_stuffer *stuffer, const char *str);
-extern int s2n_stuffer_init_ro_from_string(struct s2n_stuffer *stuffer, uint8_t *data, uint32_t length);
+extern int s2n_stuffer_skip_expected_char(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char expected, const uint32_t min, const uint32_t max, uint32_t *skipped: itype(_Ptr<uint32_t>));
+extern int s2n_stuffer_skip_read_until(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *target: itype(_Nt_array_ptr<const char>));
+extern int s2n_stuffer_alloc_ro_from_string(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *str: itype(_Nt_array_ptr<const char>));
+extern int s2n_stuffer_init_ro_from_string(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t *data: itype(_Array_ptr<uint8_t>) count(length), uint32_t length);
 
 /* Read a private key from a PEM encoded stuffer to an ASN1/DER encoded one */
-extern int s2n_stuffer_private_key_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer *asn1);
+extern int s2n_stuffer_private_key_from_pem(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *asn1: itype(_Ptr<struct s2n_stuffer>));
 
 /* Read a certificate  from a PEM encoded stuffer to an ASN1/DER encoded one */
-extern int s2n_stuffer_certificate_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer *asn1);
+extern int s2n_stuffer_certificate_from_pem(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *asn1: itype(_Ptr<struct s2n_stuffer>));
 
 /* Read DH parameters om a PEM encoded stuffer to a PKCS3 encoded one */
-extern int s2n_stuffer_dhparams_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer *pkcs3);
+extern int s2n_stuffer_dhparams_from_pem(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *pkcs3: itype(_Ptr<struct s2n_stuffer>));
 
 extern bool s2n_is_base64_char(unsigned char c);
 

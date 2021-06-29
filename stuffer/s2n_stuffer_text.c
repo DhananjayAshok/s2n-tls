@@ -20,7 +20,7 @@
 #include "utils/s2n_safety.h"
 #include "utils/s2n_mem.h"
 
-int s2n_stuffer_peek_char(struct s2n_stuffer *s2n_stuffer, char *c)
+int s2n_stuffer_peek_char(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), char *c: itype(_Nt_array_ptr<char>))
 {
     int r = s2n_stuffer_read_uint8(s2n_stuffer, (uint8_t *) c);
     if (r == S2N_SUCCESS) {
@@ -31,7 +31,7 @@ int s2n_stuffer_peek_char(struct s2n_stuffer *s2n_stuffer, char *c)
 }
 
 /* Peeks in stuffer to see if expected string is present. */
-int s2n_stuffer_peek_check_for_str(struct s2n_stuffer *s2n_stuffer, const char *expected)
+int s2n_stuffer_peek_check_for_str(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), const char *expected: itype(_Nt_array_ptr<const char>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(s2n_stuffer));
     uint32_t orig_read_pos = s2n_stuffer->read_cursor;
@@ -41,7 +41,7 @@ int s2n_stuffer_peek_check_for_str(struct s2n_stuffer *s2n_stuffer, const char *
     return rc;
 }
 
-int s2n_stuffer_skip_whitespace(struct s2n_stuffer *s2n_stuffer, uint32_t *skipped)
+int s2n_stuffer_skip_whitespace(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t *skipped: itype(_Ptr<uint32_t>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(s2n_stuffer));
     uint32_t initial_read_cursor = s2n_stuffer->read_cursor;
@@ -63,7 +63,7 @@ int s2n_stuffer_skip_whitespace(struct s2n_stuffer *s2n_stuffer, uint32_t *skipp
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_read_expected_str(struct s2n_stuffer *stuffer, const char *expected)
+int s2n_stuffer_read_expected_str(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *expected: itype(_Nt_array_ptr<const char>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(expected);
@@ -81,7 +81,7 @@ int s2n_stuffer_read_expected_str(struct s2n_stuffer *stuffer, const char *expec
 }
 
 /* Read from stuffer until the target string is found, or until there is no more data. */
-int s2n_stuffer_skip_read_until(struct s2n_stuffer *stuffer, const char *target)
+int s2n_stuffer_skip_read_until(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *target: itype(_Nt_array_ptr<const char>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(target);
@@ -108,7 +108,7 @@ int s2n_stuffer_skip_read_until(struct s2n_stuffer *stuffer, const char *target)
 }
 
 /* Skips the stuffer until the first instance of the target character or until there is no more data. */
-int s2n_stuffer_skip_to_char(struct s2n_stuffer *stuffer, const char target)
+int s2n_stuffer_skip_to_char(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char target)
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     while (s2n_stuffer_data_available(stuffer) > 0) {
@@ -122,7 +122,7 @@ int s2n_stuffer_skip_to_char(struct s2n_stuffer *stuffer, const char target)
 }
 
 /* Skips an expected character in the stuffer between min and max times */
-int s2n_stuffer_skip_expected_char(struct s2n_stuffer *stuffer, const char expected, const uint32_t min, const uint32_t max, uint32_t *skipped)
+int s2n_stuffer_skip_expected_char(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char expected, const uint32_t min, const uint32_t max, uint32_t *skipped: itype(_Ptr<uint32_t>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE(min <= max, S2N_ERR_SAFETY);
@@ -143,7 +143,7 @@ int s2n_stuffer_skip_expected_char(struct s2n_stuffer *stuffer, const char expec
 }
 
 /* Read a line of text. Agnostic to LF or CR+LF line endings. */
-int s2n_stuffer_read_line(struct s2n_stuffer *stuffer, struct s2n_stuffer *token)
+int s2n_stuffer_read_line(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *token: itype(_Ptr<struct s2n_stuffer>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_PRECONDITION(s2n_stuffer_validate(token));
@@ -159,7 +159,7 @@ int s2n_stuffer_read_line(struct s2n_stuffer *stuffer, struct s2n_stuffer *token
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_read_token(struct s2n_stuffer *stuffer, struct s2n_stuffer *token, char delim)
+int s2n_stuffer_read_token(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *token: itype(_Ptr<struct s2n_stuffer>), char delim)
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_PRECONDITION(s2n_stuffer_validate(token));
@@ -184,7 +184,7 @@ int s2n_stuffer_read_token(struct s2n_stuffer *stuffer, struct s2n_stuffer *toke
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_alloc_ro_from_string(struct s2n_stuffer *stuffer, const char *str)
+int s2n_stuffer_alloc_ro_from_string(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *str: itype(_Nt_array_ptr<const char>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(str);
@@ -193,7 +193,7 @@ int s2n_stuffer_alloc_ro_from_string(struct s2n_stuffer *stuffer, const char *st
     return s2n_stuffer_write_bytes(stuffer, (const uint8_t *)str, length);
 }
 
-int s2n_stuffer_init_ro_from_string(struct s2n_stuffer *stuffer, uint8_t *data, uint32_t length)
+int s2n_stuffer_init_ro_from_string(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t *data: itype(_Array_ptr<uint8_t>) count(length), uint32_t length)
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(data);

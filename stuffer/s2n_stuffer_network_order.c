@@ -21,11 +21,11 @@
 #include "utils/s2n_safety.h"
 
 /* Writes length bytes of input to stuffer, in network order, starting from the smallest byte of input. */
-int s2n_stuffer_write_network_order(struct s2n_stuffer *stuffer, const uint64_t input, const uint8_t length)
+int s2n_stuffer_write_network_order(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint64_t input, const uint8_t length)
 {
     POSIX_ENSURE(length <= sizeof(input), S2N_ERR_SAFETY);
     POSIX_GUARD(s2n_stuffer_skip_write(stuffer, length));
-    uint8_t *data = (stuffer->blob.data) ? (stuffer->blob.data + stuffer->write_cursor - length) : NULL;
+    _Array_ptr<uint8_t> data: count(length) = (stuffer->blob.data) ? (stuffer->blob.data + stuffer->write_cursor - length) : NULL;
 
     for (int i = 0; i < length; i++) {
         S2N_INVARIANT(i <= length);
@@ -36,7 +36,7 @@ int s2n_stuffer_write_network_order(struct s2n_stuffer *stuffer, const uint64_t 
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_reserve(struct s2n_stuffer *stuffer, struct s2n_stuffer_reservation *reservation, const uint8_t length)
+int s2n_stuffer_reserve(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer_reservation *reservation: itype(_Ptr<struct s2n_stuffer_reservation>), const uint8_t length)
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(reservation);
@@ -49,24 +49,24 @@ int s2n_stuffer_reserve(struct s2n_stuffer *stuffer, struct s2n_stuffer_reservat
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_read_uint8(struct s2n_stuffer *stuffer, uint8_t * u)
+int s2n_stuffer_read_uint8(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t * u : itype(_Ptr<uint8_t>))
 {
     POSIX_GUARD(s2n_stuffer_read_bytes(stuffer, u, sizeof(uint8_t)));
 
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_write_uint8(struct s2n_stuffer *stuffer, const uint8_t u)
+int s2n_stuffer_write_uint8(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint8_t u)
 {
     POSIX_GUARD(s2n_stuffer_write_bytes(stuffer, &u, sizeof(u)));
 
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_read_uint16(struct s2n_stuffer *stuffer, uint16_t * u)
+int s2n_stuffer_read_uint16(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint16_t * u: itype(_Ptr<uint16_t>))
 {
     POSIX_ENSURE_REF(u);
-    uint8_t data[sizeof(uint16_t)];
+    uint8_t data _Checked[sizeof(uint16_t)];
 
     POSIX_GUARD(s2n_stuffer_read_bytes(stuffer, data, sizeof(data)));
 
@@ -76,20 +76,20 @@ int s2n_stuffer_read_uint16(struct s2n_stuffer *stuffer, uint16_t * u)
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_write_uint16(struct s2n_stuffer *stuffer, const uint16_t u)
+int s2n_stuffer_write_uint16(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint16_t u)
 {
     return s2n_stuffer_write_network_order(stuffer, u, sizeof(u));
 }
 
-int s2n_stuffer_reserve_uint16(struct s2n_stuffer *stuffer, struct s2n_stuffer_reservation *reservation)
+int s2n_stuffer_reserve_uint16(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer_reservation *reservation: itype(_Ptr<struct s2n_stuffer_reservation>))
 {
     return s2n_stuffer_reserve(stuffer, reservation, sizeof(uint16_t));
 }
 
-int s2n_stuffer_read_uint24(struct s2n_stuffer *stuffer, uint32_t * u)
+int s2n_stuffer_read_uint24(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t * u: itype(_Ptr<uint32_t>))
 {
     POSIX_ENSURE_REF(u);
-    uint8_t data[SIZEOF_UINT24];
+    uint8_t data _Checked[SIZEOF_UINT24];
 
     POSIX_GUARD(s2n_stuffer_read_bytes(stuffer, data, sizeof(data)));
 
@@ -100,20 +100,20 @@ int s2n_stuffer_read_uint24(struct s2n_stuffer *stuffer, uint32_t * u)
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_write_uint24(struct s2n_stuffer *stuffer, const uint32_t u)
+int s2n_stuffer_write_uint24(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t u)
 {
     return s2n_stuffer_write_network_order(stuffer, u, SIZEOF_UINT24);
 }
 
-int s2n_stuffer_reserve_uint24(struct s2n_stuffer *stuffer, struct s2n_stuffer_reservation *reservation)
+int s2n_stuffer_reserve_uint24(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer_reservation *reservation: itype(_Ptr<struct s2n_stuffer_reservation>))
 {
     return s2n_stuffer_reserve(stuffer, reservation, SIZEOF_UINT24);
 }
 
-int s2n_stuffer_read_uint32(struct s2n_stuffer *stuffer, uint32_t * u)
+int s2n_stuffer_read_uint32(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t * u: itype(_Ptr<uint32_t>))
 {
     POSIX_ENSURE_REF(u);
-    uint8_t data[sizeof(uint32_t)];
+    uint8_t data _Checked[sizeof(uint32_t)];
 
     POSIX_GUARD(s2n_stuffer_read_bytes(stuffer, data, sizeof(data)));
 
@@ -125,15 +125,15 @@ int s2n_stuffer_read_uint32(struct s2n_stuffer *stuffer, uint32_t * u)
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_write_uint32(struct s2n_stuffer *stuffer, const uint32_t u)
+int s2n_stuffer_write_uint32(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t u)
 {
     return s2n_stuffer_write_network_order(stuffer, u, sizeof(u));
 }
 
-int s2n_stuffer_read_uint64(struct s2n_stuffer *stuffer, uint64_t * u)
+int s2n_stuffer_read_uint64(struct s2n_stuffer *stuffer : itype(_Ptr<struct s2n_stuffer>), uint64_t * u: itype(_Ptr<uint64_t>))
 {
     POSIX_ENSURE_REF(u);
-    uint8_t data[sizeof(uint64_t)];
+    uint8_t data _Checked[sizeof(uint64_t)];
 
     POSIX_GUARD(s2n_stuffer_read_bytes(stuffer, data, sizeof(data)));
 
@@ -149,7 +149,7 @@ int s2n_stuffer_read_uint64(struct s2n_stuffer *stuffer, uint64_t * u)
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_write_uint64(struct s2n_stuffer *stuffer, const uint64_t u)
+int s2n_stuffer_write_uint64(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint64_t u)
 {
     return s2n_stuffer_write_network_order(stuffer, u, sizeof(u));
 }
@@ -167,7 +167,7 @@ static int length_matches_value_check(uint32_t value, uint8_t length)
     return S2N_SUCCESS;
 }
 
-static int s2n_stuffer_write_reservation_impl(struct s2n_stuffer_reservation* reservation, const uint32_t u)
+static int s2n_stuffer_write_reservation_impl(struct s2n_stuffer_reservation* reservation: itype(_Ptr<struct s2n_stuffer_reservation>), const uint32_t u)
 {
     reservation->stuffer->write_cursor = reservation->write_cursor;
     POSIX_PRECONDITION(s2n_stuffer_validate(reservation->stuffer));
@@ -178,7 +178,7 @@ static int s2n_stuffer_write_reservation_impl(struct s2n_stuffer_reservation* re
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_write_reservation(struct s2n_stuffer_reservation* reservation, const uint32_t u)
+int s2n_stuffer_write_reservation(struct s2n_stuffer_reservation* reservation: itype(_Ptr<struct s2n_stuffer_reservation>), const uint32_t u)
 {
     POSIX_PRECONDITION(s2n_stuffer_reservation_validate(reservation));
     uint32_t old_write_cursor = reservation->stuffer->write_cursor;
@@ -187,7 +187,7 @@ int s2n_stuffer_write_reservation(struct s2n_stuffer_reservation* reservation, c
     return result;
 }
 
-int s2n_stuffer_write_vector_size(struct s2n_stuffer_reservation* reservation)
+int s2n_stuffer_write_vector_size(struct s2n_stuffer_reservation* reservation: itype(_Ptr<struct s2n_stuffer_reservation>))
 {
     POSIX_PRECONDITION(s2n_stuffer_reservation_validate(reservation));
     uint32_t size = 0;

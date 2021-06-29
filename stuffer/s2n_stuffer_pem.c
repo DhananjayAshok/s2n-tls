@@ -32,7 +32,7 @@
 #define S2N_PEM_EC_PARAMETERS               "EC PARAMETERS"
 #define S2N_PEM_CERTIFICATE                 "CERTIFICATE"
 
-static int s2n_stuffer_pem_read_encapsulation_line(struct s2n_stuffer *pem, const char* encap_marker, const char *keyword) {
+static int s2n_stuffer_pem_read_encapsulation_line(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), const char* encap_marker: itype(_Nt_array_ptr<const char>), const char *keyword: itype(_Nt_array_ptr<const char>)) {
 
     /* Skip any number of Chars until a "-" is reached */
     POSIX_GUARD(s2n_stuffer_skip_to_char(pem, S2N_PEM_DELIMTER_CHAR));
@@ -60,17 +60,17 @@ static int s2n_stuffer_pem_read_encapsulation_line(struct s2n_stuffer *pem, cons
     return s2n_stuffer_skip_whitespace(pem, NULL);
 }
 
-static int s2n_stuffer_pem_read_begin(struct s2n_stuffer *pem, const char *keyword)
+static int s2n_stuffer_pem_read_begin(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), const char *keyword: itype(_Nt_array_ptr<const char>))
 {
     return s2n_stuffer_pem_read_encapsulation_line(pem, S2N_PEM_BEGIN_TOKEN, keyword);
 }
 
-static int s2n_stuffer_pem_read_end(struct s2n_stuffer *pem, const char *keyword)
+static int s2n_stuffer_pem_read_end(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), const char *keyword: itype(_Nt_array_ptr<const char>))
 {
     return s2n_stuffer_pem_read_encapsulation_line(pem, S2N_PEM_END_TOKEN, keyword);
 }
 
-static int s2n_stuffer_pem_read_contents(struct s2n_stuffer *pem, struct s2n_stuffer *asn1)
+static int s2n_stuffer_pem_read_contents(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *asn1: itype(_Ptr<struct s2n_stuffer>))
 {
     s2n_stack_blob(base64__blob, 64, 64);
     struct s2n_stuffer base64_stuffer = {0};
@@ -110,7 +110,7 @@ static int s2n_stuffer_pem_read_contents(struct s2n_stuffer *pem, struct s2n_stu
     return S2N_SUCCESS;
 }
 
-static int s2n_stuffer_data_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer *asn1, const char *keyword)
+static int s2n_stuffer_data_from_pem(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *asn1: itype(_Ptr<struct s2n_stuffer>), const char *keyword: itype(_Nt_array_ptr<const char>))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(pem));
     POSIX_PRECONDITION(s2n_stuffer_validate(asn1));
@@ -125,7 +125,7 @@ static int s2n_stuffer_data_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_private_key_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer *asn1) {
+int s2n_stuffer_private_key_from_pem(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *asn1: itype(_Ptr<struct s2n_stuffer>)) {
     POSIX_PRECONDITION(s2n_stuffer_validate(pem));
     POSIX_PRECONDITION(s2n_stuffer_validate(asn1));
     int rc;
@@ -160,12 +160,12 @@ int s2n_stuffer_private_key_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer
     return s2n_stuffer_data_from_pem(pem, asn1, S2N_PEM_PKCS8_PRIVATE_KEY);
 }
 
-int s2n_stuffer_certificate_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer *asn1)
+int s2n_stuffer_certificate_from_pem(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *asn1: itype(_Ptr<struct s2n_stuffer>))
 {
     return s2n_stuffer_data_from_pem(pem, asn1, S2N_PEM_CERTIFICATE);
 }
 
-int s2n_stuffer_dhparams_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer *pkcs3)
+int s2n_stuffer_dhparams_from_pem(struct s2n_stuffer *pem: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *pkcs3: itype(_Ptr<struct s2n_stuffer>))
 {
     return s2n_stuffer_data_from_pem(pem, pkcs3, S2N_PEM_DH_PARAMETERS);
 }
