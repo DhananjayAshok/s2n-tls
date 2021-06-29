@@ -335,7 +335,7 @@ extern __thread const char *s2n_debug_str: itype(_Ptr<const char>);
 
 /** Calculate and print stacktraces */
 struct s2n_stacktrace {
-  char **trace;
+  char **trace: itype(_Ptr<_Ptr<char>>);
   int trace_size;
 };
 

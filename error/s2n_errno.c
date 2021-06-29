@@ -28,13 +28,15 @@
 #   include <execinfo.h>
 #endif
 
+#pragma CHECKED_SCOPE ON
+
 __thread int s2n_errno;
 __thread const char *s2n_debug_str: itype(_Ptr<const char>);
 
 /**
  * Returns the address of the thread-local `s2n_errno` variable
  */
-int *s2n_errno_location()
+_Ptr<int> s2n_errno_location(void)
 {
     return &s2n_errno;
 }
@@ -370,7 +372,7 @@ __thread struct s2n_stacktrace tl_stacktrace = {0};
 int s2n_free_stacktrace(void)
 {
     if (tl_stacktrace.trace != NULL) {
-        free(tl_stacktrace.trace);
+        free<_Ptr<char>>(tl_stacktrace.trace);
 	struct s2n_stacktrace zero_stacktrace = {0};
 	tl_stacktrace = zero_stacktrace;
     }
@@ -378,7 +380,7 @@ int s2n_free_stacktrace(void)
 }
 
 int s2n_calculate_stacktrace(void)
-{
+_Unchecked{ // Because of errno
     if (!s_s2n_stack_traces_enabled) {
         return S2N_SUCCESS;
     }
@@ -398,6 +400,7 @@ int s2n_get_stacktrace(struct s2n_stacktrace *trace) {
 }
 
 int s2n_print_stacktrace(FILE *fptr)
+_Unchecked // fprint argument variadic calls cannot be made safe. 
 {
     if (!s_s2n_stack_traces_enabled) {
       fprintf(fptr, "%s\n%s\n",
