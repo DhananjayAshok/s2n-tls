@@ -20,9 +20,11 @@
 #include "utils/s2n_safety.h"
 #include "utils/s2n_mem.h"
 
-int s2n_stuffer_peek_char(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), char *c: itype(_Nt_array_ptr<char>))
+#pragma CHECKED_SCOPE ON
+
+int s2n_stuffer_peek_char(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), char *c: itype(_Nt_array_ptr<char>) count(1))
 {
-    int r = s2n_stuffer_read_uint8(s2n_stuffer, (uint8_t *) c);
+    int r = s2n_stuffer_read_uint8(s2n_stuffer, (_Ptr<uint8_t>) c);
     if (r == S2N_SUCCESS) {
         s2n_stuffer->read_cursor--;
     }
@@ -64,6 +66,7 @@ int s2n_stuffer_skip_whitespace(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<stru
 }
 
 int s2n_stuffer_read_expected_str(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *expected: itype(_Nt_array_ptr<const char>))
+_Unchecked
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(expected);
@@ -72,7 +75,7 @@ int s2n_stuffer_read_expected_str(struct s2n_stuffer *stuffer: itype(_Ptr<struct
         return S2N_SUCCESS;
     }
     POSIX_ENSURE(s2n_stuffer_data_available(stuffer) >= expected_length, S2N_ERR_STUFFER_OUT_OF_DATA);
-    uint8_t *actual = stuffer->blob.data + stuffer->read_cursor;
+    uint8_t * actual  = stuffer->blob.data + stuffer->read_cursor;
     POSIX_ENSURE_REF(actual);
     POSIX_ENSURE(!memcmp(actual, expected, expected_length), S2N_ERR_STUFFER_NOT_FOUND);
     stuffer->read_cursor += expected_length;
@@ -82,7 +85,7 @@ int s2n_stuffer_read_expected_str(struct s2n_stuffer *stuffer: itype(_Ptr<struct
 
 /* Read from stuffer until the target string is found, or until there is no more data. */
 int s2n_stuffer_skip_read_until(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *target: itype(_Nt_array_ptr<const char>))
-{
+_Unchecked{
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(target);
     const int len = strlen(target);
@@ -92,10 +95,10 @@ int s2n_stuffer_skip_read_until(struct s2n_stuffer *stuffer: itype(_Ptr<struct s
     while (s2n_stuffer_data_available(stuffer) >= len) {
         POSIX_GUARD(s2n_stuffer_skip_to_char(stuffer, target[0]));
         POSIX_GUARD(s2n_stuffer_skip_read(stuffer, len));
-        uint8_t *actual = stuffer->blob.data + stuffer->read_cursor - len;
+        _Ptr<uint8_t> actual = stuffer->blob.data + stuffer->read_cursor - len;
         POSIX_ENSURE_REF(actual);
 
-        if (strncmp((char*)actual, target, len) == 0){
+        if (strncmp((char *)actual, target, len) == 0){
             return S2N_SUCCESS;
         } else {
             /* If string doesn't match, rewind stuffer to 1 byte after last read */
@@ -184,13 +187,14 @@ int s2n_stuffer_read_token(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_st
     return S2N_SUCCESS;
 }
 
-int s2n_stuffer_alloc_ro_from_string(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *str: itype(_Nt_array_ptr<const char>))
+int s2n_stuffer_alloc_ro_from_string(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *str: itype(_Nt_array_ptr<const char>) count(1))
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(str);
     uint32_t length = strlen(str);
     POSIX_GUARD(s2n_stuffer_alloc(stuffer, length + 1));
-    return s2n_stuffer_write_bytes(stuffer, (const uint8_t *)str, length);
+
+    return s2n_stuffer_write_bytes(stuffer, (_Ptr<const uint8_t>)str, length);
 }
 
 int s2n_stuffer_init_ro_from_string(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t *data: itype(_Array_ptr<uint8_t>) count(length), uint32_t length)

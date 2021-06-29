@@ -142,7 +142,7 @@ extern int s2n_stuffer_write_base64(struct s2n_stuffer *stuffer: itype(_Ptr<stru
 #define s2n_stuffer_write_text( stuffer, c, n )  s2n_stuffer_write_bytes( (stuffer), (const uint8_t *) (c), (n) )
 #define s2n_stuffer_read_text( stuffer, c, n )  s2n_stuffer_read_bytes( (stuffer), (uint8_t *) (c), (n) )
 extern int s2n_stuffer_read_expected_str(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *expected: itype(_Nt_array_ptr<const char>));
-extern int s2n_stuffer_peek_char(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), char *c: itype(_Nt_array_ptr<char>));
+extern int s2n_stuffer_peek_char(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), char *c: itype(_Nt_array_ptr<char>) count(1));
 extern int s2n_stuffer_read_token(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *token: itype(_Ptr<struct s2n_stuffer>), char delim);
 extern int s2n_stuffer_read_line(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *token: itype(_Ptr<struct s2n_stuffer>));
 extern int s2n_stuffer_peek_check_for_str(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<struct s2n_stuffer>), const char *expected: itype(_Nt_array_ptr<const char>));
@@ -150,7 +150,7 @@ extern int s2n_stuffer_skip_whitespace(struct s2n_stuffer *s2n_stuffer: itype(_P
 extern int s2n_stuffer_skip_to_char(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char target);
 extern int s2n_stuffer_skip_expected_char(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char expected, const uint32_t min, const uint32_t max, uint32_t *skipped: itype(_Ptr<uint32_t>));
 extern int s2n_stuffer_skip_read_until(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *target: itype(_Nt_array_ptr<const char>));
-extern int s2n_stuffer_alloc_ro_from_string(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *str: itype(_Nt_array_ptr<const char>));
+extern int s2n_stuffer_alloc_ro_from_string(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *str: itype(_Nt_array_ptr<const char>) count(1));
 extern int s2n_stuffer_init_ro_from_string(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint8_t *data: itype(_Array_ptr<uint8_t>) count(length), uint32_t length);
 
 /* Read a private key from a PEM encoded stuffer to an ASN1/DER encoded one */
