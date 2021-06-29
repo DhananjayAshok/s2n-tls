@@ -25,6 +25,7 @@
 #include "utils/s2n_annotations.h"
 #include "utils/s2n_safety.h"
 
+
 /**
  * Get the process id
  *
@@ -55,7 +56,7 @@ pid_t s2n_actual_getpid()
  * Returns:
  *  Whether all bytes in arrays "a" and "b" are identical
  */
-bool s2n_constant_time_equals(const uint8_t * a: itype(_Array_ptr<const uint8_t>), const uint8_t * b: itype(_Array_ptr<const uint8_t>), const uint32_t len)
+bool s2n_constant_time_equals(const uint8_t * a: itype(_Array_ptr<const uint8_t>) count(len), const uint8_t * b: itype(_Array_ptr<const uint8_t>) count(len), const uint32_t len)
 {
     S2N_PUBLIC_INPUT(a);
     S2N_PUBLIC_INPUT(b);
@@ -88,7 +89,7 @@ bool s2n_constant_time_equals(const uint8_t * a: itype(_Array_ptr<const uint8_t>
  * will affect the timing of this function).
  *
  */
-int s2n_constant_time_copy_or_dont(uint8_t * dest: itype(_Array_ptr<uint8_t>), const uint8_t * src: itype(_Array_ptr<const uint8_t>), uint32_t len, uint8_t dont)
+int s2n_constant_time_copy_or_dont(uint8_t * dest: itype(_Array_ptr<uint8_t>) count(len), const uint8_t * src: itype(_Array_ptr<const uint8_t>) count(len), uint32_t len, uint8_t dont)
 {
     S2N_PUBLIC_INPUT(dest);
     S2N_PUBLIC_INPUT(src);
@@ -114,8 +115,8 @@ int s2n_constant_time_copy_or_dont(uint8_t * dest: itype(_Array_ptr<uint8_t>), c
  *
  * Normally, one would fill dst with random bytes before calling this function.
  */
-int s2n_constant_time_pkcs1_unpad_or_dont(uint8_t * dst: itype(_Array_ptr<uint8_t>), const uint8_t * src: itype(_Array_ptr<const uint8_t>), uint32_t srclen, uint32_t expectlen)
-{
+int s2n_constant_time_pkcs1_unpad_or_dont(uint8_t * dst: itype(_Array_ptr<uint8_t>) count(expectlen), const uint8_t * src: itype(_Array_ptr<const uint8_t>) count(srclen), uint32_t srclen, uint32_t expectlen)
+_Unchecked{
     S2N_PUBLIC_INPUT(dst);
     S2N_PUBLIC_INPUT(src);
     S2N_PUBLIC_INPUT(srclen);
@@ -134,11 +135,12 @@ int s2n_constant_time_pkcs1_unpad_or_dont(uint8_t * dst: itype(_Array_ptr<uint8_
      * Bytes 2 through (srclen-expectlen-1) will be nonzero
      */
     uint8_t dont_copy = 0;
-    const uint8_t *start_of_data = src + srclen - expectlen;
+    
 
     dont_copy |= src[0] ^ 0x00;
     dont_copy |= src[1] ^ 0x02;
-    dont_copy |= *(start_of_data-1) ^ 0x00;
+    dont_copy |= *(src + srclen - expectlen-1) ^ 0x00;
+    _Array_ptr<const uint8_t> start_of_data: count(expectlen)  = src + srclen - expectlen;
 
     for (uint32_t i = 2; i < srclen - expectlen - 1; i++) {
         /* Note! We avoid using logical NOT (!) here; while in practice
@@ -170,7 +172,7 @@ int s2n_in_unit_test_set(bool newval)
     return S2N_SUCCESS;
 }
 
-int s2n_align_to(uint32_t initial, uint32_t alignment, uint32_t* out: itype(_Array_ptr<uint32_t>))
+int s2n_align_to(uint32_t initial, uint32_t alignment, uint32_t* out: itype(_Ptr<uint32_t>))
 {
     POSIX_ENSURE_REF(out);
     POSIX_ENSURE(alignment != 0, S2N_ERR_SAFETY);
@@ -186,7 +188,7 @@ int s2n_align_to(uint32_t initial, uint32_t alignment, uint32_t* out: itype(_Arr
     return S2N_SUCCESS;
 }
 
-int s2n_mul_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Array_ptr<uint32_t>))
+int s2n_mul_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Ptr<uint32_t>))
 {
     POSIX_ENSURE_REF(out);
     const uint64_t result = ((uint64_t) a) * ((uint64_t) b);
@@ -195,7 +197,7 @@ int s2n_mul_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Array_ptr<uin
     return S2N_SUCCESS;
 }
 
-int s2n_add_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Array_ptr<uint32_t>))
+int s2n_add_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Ptr<uint32_t>))
 {
     POSIX_ENSURE_REF(out);
     uint64_t result = ((uint64_t) a) + ((uint64_t) b);
@@ -204,7 +206,7 @@ int s2n_add_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Array_ptr<uin
     return S2N_SUCCESS;
 }
 
-int s2n_sub_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Array_ptr<uint32_t>))
+int s2n_sub_overflow(uint32_t a, uint32_t b, uint32_t* out: itype(_Ptr<uint32_t>))
 {
     POSIX_ENSURE_REF(out);
     POSIX_ENSURE(a >= b, S2N_ERR_INTEGER_OVERFLOW);
