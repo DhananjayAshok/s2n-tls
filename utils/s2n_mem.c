@@ -34,10 +34,10 @@ static bool initialized = false;
 
 static int s2n_mem_init_impl(void);
 static int s2n_mem_cleanup_impl(void);
-static int s2n_mem_free_no_mlock_impl(void *ptr, uint32_t size);
-static int s2n_mem_free_mlock_impl(void *ptr, uint32_t size);
-static int s2n_mem_malloc_no_mlock_impl(void **ptr, uint32_t requested, uint32_t *allocated);
-static int s2n_mem_malloc_mlock_impl(void **ptr, uint32_t requested, uint32_t *allocated);
+_Itype_for_any(T) static int s2n_mem_free_no_mlock_impl(void *ptr: itype(_Array_ptr<T>) byte_count(size), uint32_t size);
+_Itype_for_any(T) static int s2n_mem_free_mlock_impl(void *ptr: itype(_Array_ptr<T>) byte_count(size), uint32_t size);
+_Itype_for_any(T) static int s2n_mem_malloc_no_mlock_impl(void **ptr: itype(_Ptr<_Array_ptr<T>>), uint32_t requested, uint32_t *allocated: itype(_Ptr<uint32_t>));
+_Itype_for_any(T) static int s2n_mem_malloc_mlock_impl(void **ptr: itype(_Ptr<_Array_ptr<T>>) , uint32_t requested, uint32_t *allocated: itype(_Ptr<uint32_t>));
 
 static s2n_mem_init_callback s2n_mem_init_cb = s2n_mem_init_impl;
 static s2n_mem_cleanup_callback s2n_mem_cleanup_cb = s2n_mem_cleanup_impl;
@@ -71,7 +71,7 @@ static int s2n_mem_cleanup_impl(void)
     return S2N_SUCCESS;
 }
 
-static int s2n_mem_free_mlock_impl(void *ptr, uint32_t size)
+_Itype_for_any(T) static int s2n_mem_free_mlock_impl(void *ptr: itype(_Array_ptr<T>) byte_count(size), uint32_t size)
 {
     /* Perform a best-effort `munlock`: ignore any errors during unlocking. */
     munlock(ptr, size);
@@ -79,14 +79,14 @@ static int s2n_mem_free_mlock_impl(void *ptr, uint32_t size)
     return S2N_SUCCESS;
 }
 
-static int s2n_mem_free_no_mlock_impl(void *ptr, uint32_t size)
+_Itype_for_any(T) static int s2n_mem_free_no_mlock_impl(void *ptr: itype(_Array_ptr<T>) byte_count(size), uint32_t size)
 {
     free(ptr);
 
     return S2N_SUCCESS;
 }
 
-static int s2n_mem_malloc_mlock_impl(void **ptr, uint32_t requested, uint32_t *allocated)
+_Itype_for_any(T) static int s2n_mem_malloc_mlock_impl(void **ptr: itype(_Ptr<_Array_ptr<T>>) , uint32_t requested, uint32_t *allocated: itype(_Ptr<uint32_t>))
 {
     POSIX_ENSURE_REF(ptr);
 
@@ -121,7 +121,7 @@ static int s2n_mem_malloc_mlock_impl(void **ptr, uint32_t requested, uint32_t *a
     return S2N_SUCCESS;
 }
 
-static int s2n_mem_malloc_no_mlock_impl(void **ptr, uint32_t requested, uint32_t *allocated)
+_Itype_for_any(T) static int s2n_mem_malloc_no_mlock_impl(void **ptr: itype(_Ptr<_Array_ptr<T>>), uint32_t requested, uint32_t *allocated: itype(_Ptr<uint32_t>))
 {
     *ptr = malloc(requested);
     POSIX_ENSURE(*ptr != NULL, S2N_ERR_ALLOC);
@@ -148,7 +148,7 @@ int s2n_mem_set_callbacks(s2n_mem_init_callback mem_init_callback, s2n_mem_clean
     return S2N_SUCCESS;
 }
 
-int s2n_alloc(struct s2n_blob *b, uint32_t size)
+int s2n_alloc(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>), uint32_t size)
 {
     POSIX_ENSURE(initialized, S2N_ERR_NOT_INITIALIZED);
     POSIX_ENSURE_REF(b);
@@ -159,7 +159,7 @@ int s2n_alloc(struct s2n_blob *b, uint32_t size)
 }
 
 /* A blob is growable if it is either explicitly marked as such, or if it contains no data */
-bool s2n_blob_is_growable(const struct s2n_blob* b)
+bool s2n_blob_is_growable(const struct s2n_blob* b: itype(_Ptr<const struct s2n_blob>))
 {
     return b && (b->growable || (b->data == NULL && b->size == 0 && b->allocated == 0));
 }
@@ -168,7 +168,7 @@ bool s2n_blob_is_growable(const struct s2n_blob* b)
  * If successful, updates *b.
  * If failed, *b remains unchanged
  */
-int s2n_realloc(struct s2n_blob *b, uint32_t size)
+int s2n_realloc(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>), uint32_t size)
 {
     POSIX_ENSURE(initialized, S2N_ERR_NOT_INITIALIZED);
     POSIX_ENSURE_REF(b);
@@ -211,25 +211,27 @@ int s2n_realloc(struct s2n_blob *b, uint32_t size)
     return S2N_SUCCESS;
 }
 
-int s2n_free_object(uint8_t **p_data, uint32_t size)
+int s2n_free_object(uint8_t **p_data: itype(_Ptr<_Array_ptr<uint8_t>>), uint32_t size)
 {
+    _Array_ptr<uint8_t> q : count(size) = 0;
+    _Unchecked { q = _Assume_bounds_cast<_Array_ptr<uint8_t>>(*p_data,count(size)); }
     POSIX_ENSURE_REF(p_data);
 
-    if (*p_data == NULL) {
+    if (q == NULL) {
         return S2N_SUCCESS;
     }
     
     POSIX_ENSURE(initialized, S2N_ERR_NOT_INITIALIZED);
-    struct s2n_blob b = {.data = *p_data, .allocated = size, .size = size, .growable = 1};
+    struct s2n_blob b = {.data = q, .allocated = size, .size = size, .growable = 1};
 
     /* s2n_free() will call free() even if it returns error (for a growable blob).
     ** This makes sure *p_data is not used after free() */
-    *p_data = NULL;
+    q = NULL;
 
     return s2n_free(&b);
 }
 
-int s2n_dup(struct s2n_blob *from, struct s2n_blob *to)
+int s2n_dup(struct s2n_blob *from: itype(_Ptr<struct s2n_blob>), struct s2n_blob *to: itype(_Ptr<struct s2n_blob>))
 {
     POSIX_ENSURE(initialized, S2N_ERR_NOT_INITIALIZED);
     POSIX_ENSURE_EQ(to->size, 0);
@@ -273,7 +275,7 @@ int s2n_mem_cleanup(void)
     return S2N_SUCCESS;
 }
 
-int s2n_free(struct s2n_blob *b)
+int s2n_free(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>))
 {
     POSIX_PRECONDITION(s2n_blob_validate(b));
 
@@ -293,7 +295,7 @@ int s2n_free(struct s2n_blob *b)
     return S2N_SUCCESS;
 }
 
-int s2n_blob_zeroize_free(struct s2n_blob *b) {
+int s2n_blob_zeroize_free(struct s2n_blob *b: itype(_Ptr<struct s2n_blob>)) {
     POSIX_ENSURE(initialized, S2N_ERR_NOT_INITIALIZED);
     POSIX_ENSURE_REF(b);
 
