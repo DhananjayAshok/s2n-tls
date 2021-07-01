@@ -23,7 +23,7 @@
 #include "utils/s2n_blob.h"
 #include "utils/s2n_mem.h"
 
-
+#pragma CHECKED_SCOPE ON
 
 S2N_RESULT s2n_stuffer_validate(const struct s2n_stuffer* stuffer: itype(_Ptr<const struct s2n_stuffer>))
 {
@@ -361,7 +361,7 @@ _Unchecked {
 }
 
 static int s2n_stuffer_copy_impl(struct s2n_stuffer *from: itype(_Ptr<struct s2n_stuffer>), struct s2n_stuffer *to: itype(_Ptr<struct s2n_stuffer>), const uint32_t len)
-{
+_Unchecked{
     POSIX_GUARD(s2n_stuffer_skip_read(from, len));
     POSIX_GUARD(s2n_stuffer_skip_write(to, len));
 
@@ -406,7 +406,7 @@ int s2n_stuffer_copy(struct s2n_stuffer *from: itype(_Ptr<struct s2n_stuffer>), 
 }
 
 int s2n_stuffer_extract_blob(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), struct s2n_blob *out: itype(_Ptr<struct s2n_blob>))
-{
+_Unchecked{
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(out);
     POSIX_GUARD(s2n_realloc(out , s2n_stuffer_data_available(stuffer)));
