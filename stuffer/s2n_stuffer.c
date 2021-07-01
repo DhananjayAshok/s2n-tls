@@ -293,8 +293,9 @@ int s2n_stuffer_skip_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_st
     return S2N_SUCCESS;
 }
 
-_Itype_for_any(T) void *s2n_stuffer_raw_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t data_len): itype(_Ptr<T>)
-_Unchecked {
+_Itype_for_any(T) void *s2n_stuffer_raw_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t data_len): itype(_Array_ptr<T>)
+ _Unchecked
+ {
     PTR_GUARD_POSIX(s2n_stuffer_skip_write(stuffer, data_len));
 
     stuffer->tainted = 1;
