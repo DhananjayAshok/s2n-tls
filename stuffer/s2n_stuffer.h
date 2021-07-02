@@ -94,8 +94,8 @@ extern int s2n_stuffer_reserve_space(struct s2n_stuffer *stuffer: itype(_Ptr<str
 /* Raw read/write move the cursor along and give you a pointer you can
  * read/write data_len bytes from/to in-place.
  */
-extern void *s2n_stuffer_raw_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t data_len);
-extern _Itype_for_any(T) void *s2n_stuffer_raw_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t data_len): itype(_Ptr<T>);
+extern _Itype_for_any(T) void *s2n_stuffer_raw_write(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const uint32_t data_len): itype(_Array_ptr<void>) byte_count(data_len);
+extern _Itype_for_any(T) void *s2n_stuffer_raw_read(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), uint32_t data_len): itype(_Array_ptr<void>) byte_count(data_len);
 
 /* Send/receive stuffer to/from a file descriptor */
 extern int s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const int rfd, const uint32_t len, uint32_t *bytes_written: itype(_Ptr<uint32_t>) );
