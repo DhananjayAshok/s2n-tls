@@ -66,7 +66,6 @@ int s2n_stuffer_skip_whitespace(struct s2n_stuffer *s2n_stuffer: itype(_Ptr<stru
 }
 
 int s2n_stuffer_read_expected_str(struct s2n_stuffer *stuffer: itype(_Ptr<struct s2n_stuffer>), const char *expected: itype(_Nt_array_ptr<const char>))
-_Unchecked
 {
     POSIX_PRECONDITION(s2n_stuffer_validate(stuffer));
     POSIX_ENSURE_REF(expected);
@@ -75,9 +74,10 @@ _Unchecked
         return S2N_SUCCESS;
     }
     POSIX_ENSURE(s2n_stuffer_data_available(stuffer) >= expected_length, S2N_ERR_STUFFER_OUT_OF_DATA);
-    uint8_t * actual  = stuffer->blob.data + stuffer->read_cursor;
+    _Nt_array_ptr<const char> new_expected : count(expected_length) = _Dynamic_bounds_cast<_Nt_array_ptr<const char>>(expected, count(expected_length));
+    _Array_ptr<uint8_t> actual: count(expected_length)  = _Dynamic_bounds_cast<_Array_ptr<uint8_t>>(stuffer->blob.data + stuffer->read_cursor, count(expected_length));
     POSIX_ENSURE_REF(actual);
-    POSIX_ENSURE(!memcmp(actual, expected, expected_length), S2N_ERR_STUFFER_NOT_FOUND);
+    POSIX_ENSURE(!memcmp(actual, new_expected, expected_length), S2N_ERR_STUFFER_NOT_FOUND);
     stuffer->read_cursor += expected_length;
     POSIX_POSTCONDITION(s2n_stuffer_validate(stuffer));
     return S2N_SUCCESS;
