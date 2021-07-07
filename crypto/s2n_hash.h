@@ -63,7 +63,7 @@ struct s2n_hash_evp_digest {
  * the hash algorithm being used at the time, and either low_level or high_level (EVP) OpenSSL digest structs.
  */
 struct s2n_hash_state {
-    const struct s2n_hash *hash_impl;
+    const struct s2n_hash *hash_impl: itype(_Ptr<const struct s2n_hash>);
     s2n_hash_algorithm alg;
     uint8_t is_ready_for_input;
     uint64_t currently_in_hash;
@@ -77,28 +77,28 @@ struct s2n_hash_state {
  * either OpenSSL's low-level algorithm-specific API's or OpenSSL's EVP API's.
  */
 struct s2n_hash {
-    int (*alloc) (struct s2n_hash_state *state);
-    int (*allow_md5_for_fips) (struct s2n_hash_state *state);
-    int (*init) (struct s2n_hash_state *state, s2n_hash_algorithm alg);
-    int (*update) (struct s2n_hash_state *state, const void *data, uint32_t size);
-    int (*digest) (struct s2n_hash_state *state, void *out, uint32_t size);
-    int (*copy) (struct s2n_hash_state *to, struct s2n_hash_state *from);
-    int (*reset) (struct s2n_hash_state *state);
-    int (*free) (struct s2n_hash_state *state);
+    int (*alloc) (struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>) );
+    int (*allow_md5_for_fips) (struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>));
+    int (*init) (struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>), s2n_hash_algorithm alg);
+    int (*update) (struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>), const void *data: itype(_Ptr<const void>), uint32_t size);
+    int (*digest) (struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>), void *out: itype(_Ptr<void>), uint32_t size);
+    int (*copy) (struct s2n_hash_state *to: itype(_Ptr<struct s2n_hash_state>), struct s2n_hash_state *from: itype(_Ptr<struct s2n_hash_state>));
+    int (*reset) (struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>));
+    int (*free) (struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>));
 };
 
-extern int s2n_hash_digest_size(s2n_hash_algorithm alg, uint8_t *out);
-extern int s2n_hash_block_size(s2n_hash_algorithm alg, uint64_t *block_size);
+extern int s2n_hash_digest_size(s2n_hash_algorithm alg, uint8_t *out: itype(_Ptr<uint8_t>));
+extern int s2n_hash_block_size(s2n_hash_algorithm alg, uint64_t *block_size: itype(_Ptr<uint64_t>));
 extern bool s2n_hash_is_available(s2n_hash_algorithm alg);
-extern int s2n_hash_is_ready_for_input(struct s2n_hash_state *state);
-extern int s2n_hash_new(struct s2n_hash_state *state);
-S2N_RESULT s2n_hash_state_validate(struct s2n_hash_state *state);
-extern int s2n_hash_allow_md5_for_fips(struct s2n_hash_state *state);
+extern int s2n_hash_is_ready_for_input(struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>));
+extern int s2n_hash_new(struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>));
+S2N_RESULT s2n_hash_state_validate(struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>));
+extern int s2n_hash_allow_md5_for_fips(struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>));
 extern int s2n_hash_init(struct s2n_hash_state *state, s2n_hash_algorithm alg);
-extern int s2n_hash_update(struct s2n_hash_state *state, const void *data, uint32_t size);
-extern int s2n_hash_digest(struct s2n_hash_state *state, void *out, uint32_t size);
-extern int s2n_hash_copy(struct s2n_hash_state *to, struct s2n_hash_state *from);
-extern int s2n_hash_reset(struct s2n_hash_state *state);
-extern int s2n_hash_free(struct s2n_hash_state *state);
-extern int s2n_hash_get_currently_in_hash_total(struct s2n_hash_state *state, uint64_t *out);
-extern int s2n_hash_const_time_get_currently_in_hash_block(struct s2n_hash_state *state, uint64_t *out);
+extern int s2n_hash_update(struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>), const void *data: itype(_Ptr<const void>), uint32_t size);
+extern int s2n_hash_digest(struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>), void *out: itype(_Ptr<void>), uint32_t size);
+extern int s2n_hash_copy(struct s2n_hash_state *to: itype(_Ptr<struct s2n_hash_state>), struct s2n_hash_state *from: itype(_Ptr<struct s2n_hash_state>));
+extern int s2n_hash_reset(struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>));
+extern int s2n_hash_free(struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>));
+extern int s2n_hash_get_currently_in_hash_total(struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>), uint64_t *out: itype(_Ptr<uint64_t>));
+extern int s2n_hash_const_time_get_currently_in_hash_block(struct s2n_hash_state *state: itype(_Ptr<struct s2n_hash_state>), uint64_t *out: itype(_Ptr<uint64_t>));
