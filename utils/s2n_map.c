@@ -31,7 +31,7 @@
 
 #define S2N_INITIAL_TABLE_SIZE 1024
 
-static S2N_RESULT s2n_map_slot(const struct s2n_map *map, struct s2n_blob *key, uint32_t *slot)
+static S2N_RESULT s2n_map_slot(const struct s2n_map *map: itype(_Ptr<const struct s2n_map>), struct s2n_blob *key: itype(_Ptr<struct s2n_blob>), uint32_t *slot: itype(_Ptr<uint32_t>))
 {
     union {
         uint8_t u8[32];
@@ -48,7 +48,7 @@ static S2N_RESULT s2n_map_slot(const struct s2n_map *map, struct s2n_blob *key, 
     return S2N_RESULT_OK;
 }
 
-static S2N_RESULT s2n_map_embiggen(struct s2n_map *map, uint32_t capacity)
+static S2N_RESULT s2n_map_embiggen(struct s2n_map *map: itype(_Ptr<struct s2n_map>), uint32_t capacity)
 {
     struct s2n_blob mem = {0};
     struct s2n_map tmp = {0};
@@ -81,12 +81,12 @@ static S2N_RESULT s2n_map_embiggen(struct s2n_map *map, uint32_t capacity)
     return S2N_RESULT_OK;
 }
 
-struct s2n_map *s2n_map_new()
+struct s2n_map *s2n_map_new(): itype(_Ptr<struct s2n_map>)
 {
     return s2n_map_new_with_initial_capacity(S2N_INITIAL_TABLE_SIZE);
 }
 
-struct s2n_map *s2n_map_new_with_initial_capacity(uint32_t capacity)
+struct s2n_map *s2n_map_new_with_initial_capacity(uint32_t capacity): itype(_Ptr<struct s2n_map>)
 {
     PTR_ENSURE(capacity != 0, S2N_ERR_MAP_INVALID_MAP_SIZE);
     struct s2n_blob mem = {0};
@@ -105,7 +105,7 @@ struct s2n_map *s2n_map_new_with_initial_capacity(uint32_t capacity)
     return map;
 }
 
-S2N_RESULT s2n_map_add(struct s2n_map *map, struct s2n_blob *key, struct s2n_blob *value)
+S2N_RESULT s2n_map_add(struct s2n_map *map: itype(_Ptr<struct s2n_map>), struct s2n_blob *key: itype(_Ptr<struct s2n_blob>), struct s2n_blob *value: itype(_Ptr<struct s2n_blob>))
 {
     RESULT_ENSURE(!map->immutable, S2N_ERR_MAP_IMMUTABLE);
 
@@ -137,7 +137,7 @@ S2N_RESULT s2n_map_add(struct s2n_map *map, struct s2n_blob *key, struct s2n_blo
     return S2N_RESULT_OK;
 }
 
-S2N_RESULT s2n_map_put(struct s2n_map *map, struct s2n_blob *key, struct s2n_blob *value)
+S2N_RESULT s2n_map_put(struct s2n_map *map: itype(_Ptr<struct s2n_map>), struct s2n_blob *key: itype(_Ptr<struct s2n_blob>), struct s2n_blob *value: itype(_Ptr<struct s2n_blob>))
 {
     RESULT_ENSURE(!map->immutable, S2N_ERR_MAP_IMMUTABLE);
 
@@ -172,21 +172,21 @@ S2N_RESULT s2n_map_put(struct s2n_map *map, struct s2n_blob *key, struct s2n_blo
     return S2N_RESULT_OK;
 }
 
-S2N_RESULT s2n_map_complete(struct s2n_map *map)
+S2N_RESULT s2n_map_complete(struct s2n_map *map: itype(_Ptr<struct s2n_map>))
 {
     map->immutable = 1;
 
     return S2N_RESULT_OK;
 }
 
-S2N_RESULT s2n_map_unlock(struct s2n_map *map)
+S2N_RESULT s2n_map_unlock(struct s2n_map *map: itype(_Ptr<struct s2n_map>))
 {
     map->immutable = 0;
 
     return S2N_RESULT_OK;
 }
 
-S2N_RESULT s2n_map_lookup(const struct s2n_map *map, struct s2n_blob *key, struct s2n_blob *value, bool *key_found)
+S2N_RESULT s2n_map_lookup(const struct s2n_map *map: itype(_Ptr<const struct s2n_map>), struct s2n_blob *key: itype(_Ptr<struct s2n_blob>), struct s2n_blob *value: itype(_Ptr<struct s2n_blob>), bool *key_found: itype(_Ptr<bool>))
 {
     RESULT_ENSURE(map->immutable, S2N_ERR_MAP_MUTABLE);
 
@@ -220,7 +220,7 @@ S2N_RESULT s2n_map_lookup(const struct s2n_map *map, struct s2n_blob *key, struc
     return S2N_RESULT_OK;
 }
 
-S2N_RESULT s2n_map_free(struct s2n_map *map)
+S2N_RESULT s2n_map_free(struct s2n_map *map: itype(_Ptr<struct s2n_map>))
 {
     /* Free the keys and values */
     for (uint32_t i = 0; i < map->capacity; i++) {

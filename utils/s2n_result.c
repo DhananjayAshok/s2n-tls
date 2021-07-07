@@ -80,6 +80,8 @@
 #include <stdbool.h>
 #include "utils/s2n_result.h"
 
+#pragma CHECKED_SCOPE ON
+
 /* returns true when the result is S2N_RESULT_OK */
 inline bool s2n_result_is_ok(s2n_result result)
 {
